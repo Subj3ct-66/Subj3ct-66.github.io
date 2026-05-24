@@ -375,20 +375,6 @@ body {
   }
 }
 
-@media screen and (min-width: 480px) and (max-width: 767px) {
-  #header-title #subtitle.site-subtitle-script {
-    font-size: 26px;
-  }
-}
-
-@media screen and (max-width: 479px) {
-  #header-title #subtitle.site-subtitle-script {
-    font-size: 20px;
-    letter-spacing: 0;
-    line-height: 1.15;
-  }
-}
-
 @media screen and (max-width: 767px) {
   html,
   body {
@@ -399,10 +385,12 @@ body {
   #header-title {
     overflow-x: clip;
     overflow-y: visible;
-    width: 100%;
+    width: 95%;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 0 14px;
+    padding: 0;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
   }
 
   #header-title #logo {
@@ -415,11 +403,23 @@ body {
     box-sizing: border-box;
   }
 
+  #header-title #subtitle.site-subtitle-script {
+    transform: scale(min(1, calc((100vw - 32px) / 480px), calc(767 / 959)));
+    transform-origin: center center;
+  }
+
   #header-title #subtitle {
-    width: 100%;
+    width: 70%;
   }
 
   #footer {
     padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media screen and (max-width: 479px) {
+  #header-title #subtitle.site-subtitle-script {
+    transform: scale(min(1, calc((100vw - 32px) / 480px), calc(479 / 959)));
+    transform-origin: center center;
   }
 }

@@ -168,62 +168,19 @@ const scriptTitle = script ? parseScriptTitle(title) : null;
     }
 
     @media screen and (max-width: 767px) {
-      font-size: 30px;
-      transform: translateY(-12%);
+      transform: translateY(-20%);
       max-width: 100%;
 
       &.site-title-script {
-        font-size: 42px;
-        line-height: 1.08;
-
-        .site-title-dollar {
-          font-size: 1.72em;
-        }
-
-        .site-title-core {
-          margin-left: -0.34em;
-        }
-
-        .site-title-letter-main {
-          font-size: 1.4em;
-        }
-      }
-    }
-
-    @media screen and (min-width: 480px) and (max-width: 767px) {
-      font-size: 30px;
-
-      &.site-title-script {
-        font-size: 44px;
+        transform: unquote('translateY(-20%) scale(min(1, calc((100vw - 32px) / 480px), calc(767 / 959)))');
+        transform-origin: center center;
       }
     }
 
     @media screen and (max-width: 479px) {
-      font-size: 28px;
-      transform: translateY(-10%);
-
       &.site-title-script {
-        font-size: 34px;
-
-        .site-title-dollar {
-          font-size: 1.58em;
-        }
-
-        .site-title-core {
-          margin-left: -0.2em;
-        }
-
-        .site-title-letter-main {
-          font-size: 1.28em;
-        }
-
-        .site-title-digit {
-          font-size: 0.8em;
-        }
-
-        .site-title-suffix {
-          letter-spacing: -0.02em;
-        }
+        transform: unquote('translateY(-20%) scale(min(1, calc((100vw - 32px) / 480px), calc(479 / 959)))');
+        transform-origin: center center;
       }
     }
   }
