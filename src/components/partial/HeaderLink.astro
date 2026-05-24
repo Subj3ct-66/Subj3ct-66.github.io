@@ -1,0 +1,92 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Icon } from "astro-icon/components";
+import { urlFor } from "../../utils/urlFor";
+
+type Props = HTMLAttributes<"a"> & {
+  icon?: string;
+};
+
+const { href, icon, ...props } = Astro.props;
+---
+
+<span class="main-nav-link-wrap">
+  {
+    icon ? (
+      <img class="main-nav-icon main-nav-icon-image" src={urlFor(icon)} alt="" width="24" height="24" />
+    ) : (
+      <Icon name="fa6-solid:yin-yang" class="main-nav-icon" size={24} />
+    )
+  }
+  <a class="main-nav-link" href={href} {...props}><slot /></a>
+</span>
+
+<style lang="stylus">
+  .main-nav-link-wrap {
+    color: var(--red-0);
+    opacity: 0.8;
+    text-decoration: none;
+    padding: 0 15px;
+    display: flex;
+    transition: .3s;
+
+    @media screen and (max-width: 959px) {
+      padding: 0 10px;
+    }
+
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+    &:hover .main-nav-icon-image {
+      transform: scale(1.1);
+    }
+    &:hover .main-nav-icon:not(.main-nav-icon-image) {
+      transform: rotate(90deg) scale(1.1);
+    }
+  }
+
+  .main-nav-link {
+    color: var(--red-0);
+    opacity: 0.7;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    padding: 20px 15px;
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+
+  :global([data-theme='dark']) {
+    .main-nav-link, .main-nav-link-wrap {
+      color: var(--red-2);
+    }
+  }
+
+  .main-nav-icon {
+    opacity: 0.8;
+    color: var(--red-0);
+    text-decoration: none;
+    display: block;
+    padding: 15px 5px;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 400;
+    transform: rotate(90deg);
+    transition: transform 0.3s, color 0.3s;
+    cursor: pointer;
+    will-change: transform;
+  }
+
+  .main-nav-icon-image {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+    color: unset;
+    transform: none;
+  }
+</style>

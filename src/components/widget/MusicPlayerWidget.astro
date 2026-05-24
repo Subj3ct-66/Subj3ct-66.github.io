@@ -1,0 +1,31 @@
+---
+import { PLAYER } from "../../utils/config";
+import { __ } from "../../utils/i18n";
+import MusicPlayer from "../partial/MusicPlayer";
+---
+
+<div class="widget-wrapper music-player-widget" data-aos="fade-up">
+  <div class="widget-wrap">
+    <h3 class="widget-title">{__("music_player")}</h3>
+    <div class="widget music-player-widget-inner">
+      <MusicPlayer
+        client:idle
+        variant="sidebar"
+        useMeting={PLAYER.meting.enable}
+        metingOptions={PLAYER.meting.options}
+        metingApi={PLAYER.meting.meting_api}
+        aplayerOptions={PLAYER.aplayer.options}
+      />
+    </div>
+  </div>
+</div>
+
+<style lang="stylus">
+  .music-player-widget {
+    margin-top: 40px;
+  }
+
+  .music-player-widget-inner {
+    padding-top: 0;
+  }
+</style>

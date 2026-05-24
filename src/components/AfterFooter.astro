@@ -1,0 +1,72 @@
+---
+import { FOOTER } from "../utils/config";
+import packageData from "../../package.json";
+
+const copyright = String.raw`
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`
+---
+
+<!-- busuanzi -->
+{
+  FOOTER.busuanzi && 
+  <script>
+  document.addEventListener('astro:page-load', () => {
+    window.loadScript("https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js", "busuanzi-script");
+  })
+</script>
+}
+
+<!-- aos -->
+<script>
+  import AOS from "@reimujs/aos";
+  const aosInit = () => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+      offset: 50,
+    });
+  };
+  aosInit();
+  document.addEventListener("astro:after-swap", aosInit);
+</script>
+<!-- ThemeToogle -->
+<script>
+  // prevent flash when using view transitions in astro
+  const initColorMode = () => {
+    const storedTheme = JSON.parse(
+      window.localStorage.getItem("theme") ?? '"auto"'
+    );
+    let presetTheme;
+    if (storedTheme === "auto") {
+      presetTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    } else {
+      presetTheme = storedTheme;
+    }
+    if (presetTheme === "dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.style.colorScheme = "dark";
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+      document.documentElement.style.colorScheme = "light";
+    }
+  };
+
+  // Runs on initial navigation
+  initColorMode();
+  // Runs on view transitions navigation
+  document.addEventListener("astro:after-swap", initColorMode);
+</script>
+<!-- Copyright -->
+<script is:inline define:vars={{ copyright, version: packageData.version }}>
+  console.log(String.raw`%c ${copyright}`,'color: #ff5252;')
+  console.log('%c Theme.Reimu v' + `${version}` + ' %c https://github.com/D-Sketon/astro-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+</script>

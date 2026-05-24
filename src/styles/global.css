@@ -1,0 +1,360 @@
+:root {
+  --red-0: #a8893a;
+  --red-1: #c9ae6d;
+  --red-2: #d4bc82;
+  --red-3: #e2cfa0;
+  --red-4: #eee0c0;
+  --red-5: #f7f0e2;
+  --red-5-5: #faf6ec;
+  --red-6: #fdfbf7;
+  --color-red-6-shadow: rgba(201, 174, 109, 0.5);
+  --color-red-3-shadow: rgba(201, 174, 109, 0.26);
+  --grey-9: #888;
+  --grey-7: var(--color-default);
+
+  --color-archive-year: black;
+  --color-default: #444;
+  --color-border: var(--red-3);
+  --color-link: var(--red-1);
+  --color-background: #eee;
+  --color-code-background: #f8f8f8;
+  --color-header-background: rgba(255, 255, 255, 0.9);
+  --color-footer-background: #fff;
+  --color-mobile-nav-background: #fff;
+  --color-wrap: #fff;
+
+  --color-h2-border: #eee;
+  --color-meta-shadow: var(--red-6);
+  --color-hover-shadow: rgba(120, 120, 120, 0.15);
+  --color-h2-after: var(--red-1);
+
+  --shadow-meta: 0 0 5px 2px var(--color-meta-shadow);
+  --shadow-meta-hover: 0 0 6px 4px var(--color-meta-shadow);
+  --shadow-card: 0 0 10px 2px var(--color-hover-shadow);
+  --shadow-card-hover: 0 0 10px 4px var(--color-hover-shadow);
+  --shadow-red-6-shadow: 0 0 8px var(--color-red-6-shadow);
+  --post-cover-position: center 18%;
+  --banner-position: center 12%;
+  --banner-area-height: 75vh;
+  --banner-area-min-height: 480px;
+  --banner-image-scale: 90%;
+  --banner-fade-ratio: 0.72;
+  --content-overlap-ratio: 0.22;
+  --search-popup-top: 0px;
+}
+
+[data-theme="dark"]:root {
+  --red-0: var(--red-1);
+  --red-4: rgba(238, 224, 192, 0.48);
+  --red-5: rgba(247, 240, 226, 0.15);
+  --red-5-5: rgba(250, 246, 236, 0.05);
+  --red-6: rgba(253, 251, 247, 0.2);
+
+  --color-archive-year: #999;
+  --color-default: #999;
+  --color-border: var(--red-5);
+  --color-background: #21252b;
+  --color-code-background: rgba(232, 232, 232, 0.2);
+  --color-header-background: #222222;
+  --color-footer-background: #21252b;
+  --color-mobile-nav-background: #21252b;
+  --color-wrap: #272b30;
+
+  --color-h2-border: #47474a;
+  --color-meta-shadow: rgba(0, 0, 0, 0.2);
+  --color-hover-shadow: rgba(0, 0, 0, 0.2);
+
+  img {
+    filter: brightness(70%);
+  }
+}
+
+/* fix astro bug https://github.com/withastro/astro/issues/9521 */
+svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
+  overflow: visible;
+  box-sizing: content-box;
+}
+.svg-inline--fa {
+  display: var(--fa-display, inline-block);
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  font-weight: inherit;
+  font-style: inherit;
+  vertical-align: baseline;
+  border: 0;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: 100%;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  vertical-align: middle;
+}
+
+caption,
+th,
+td {
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 400;
+}
+
+a img {
+  border: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+}
+
+input,
+button {
+  margin: 0;
+  padding: 0;
+}
+
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  background: var(--color-background);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
+  transition: background 1s;
+  text-autospace: normal;
+  color: var(--color-default);
+  font-family: 'LXGW WenKai Screen', -apple-system, PingFang SC,
+    Microsoft YaHei, sans-serif;
+  transition: 0.3s;
+  line-height: 1;
+}
+
+::selection {
+  background: var(--red-1);
+  color: #3d3422;
+}
+
+#mask {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 1;
+  transition: 0.3s;
+
+  &.hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.mobile-nav-on {
+  overflow: hidden !important;
+}
+
+#main {
+  flex: 1;
+  padding: 0 20px;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 959px) {
+    min-width: 100%;
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 0 16px;
+  }
+}
+
+[data-theme="dark"] {
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-track {
+    background-color: #616161;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: var(--red-3);
+}
+
+[data-aos^="fade"],
+[data-aos^="zoom"] {
+  transition-property: all !important;
+}
+
+/* 搜索弹窗：样式必须在 global 加载（React 组件内 import stylus 会失效） */
+.site-search {
+  position: static;
+  pointer-events: none;
+}
+
+.site-search .popup {
+  pointer-events: auto;
+  visibility: hidden;
+  position: fixed;
+  top: var(--search-popup-top, 0px);
+  left: 50%;
+  width: 700px;
+  max-height: calc(100vh - var(--search-popup-top, 0px) - 16px);
+  margin-left: -350px;
+  background: var(--color-wrap);
+  color: #000;
+  z-index: 10000;
+  border-radius: 12px;
+  opacity: 0;
+  transform: scale(0.5);
+  transform-origin: top center;
+  transition: 0.3s;
+  box-shadow: 0 0 10px var(--color-meta-shadow);
+}
+
+.site-search .popup.show {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media screen and (max-width: 767px) {
+  .site-search .popup {
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .site-search .popup {
+    min-height: 350px;
+  }
+}
+
+#header-title #subtitle.site-subtitle-script {
+  font-family: "Great Vibes", "Zen Kurenaido", cursive;
+  font-size: 36px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+@media screen and (max-width: 959px) {
+  #header-title #subtitle.site-subtitle-script {
+    font-size: 30px;
+  }
+}
+
+@media screen and (min-width: 480px) and (max-width: 767px) {
+  #header-title #subtitle.site-subtitle-script {
+    font-size: 26px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  #header-title #subtitle.site-subtitle-script {
+    font-size: 24px;
+  }
+}

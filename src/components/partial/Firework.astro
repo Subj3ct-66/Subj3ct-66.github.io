@@ -1,0 +1,45 @@
+---
+import { FIREWORK } from "../../utils/config";
+---
+
+{
+  FIREWORK.enable && (
+    <>
+      <script
+        src="https://cdn.jsdelivr.net/npm/mouse-firework@0.3.0-beta.1/dist/index.umd.js"
+        defer
+      />
+      <script is:inline define:vars={{ firework: FIREWORK }}>
+        let fireworkCleanup = null;
+
+        function isMobileDevice() {
+          return (
+            window.matchMedia("(max-width: 767px)").matches ||
+            /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+          );
+        }
+
+        function startFirework() {
+          if (!firework?.enable || typeof window.firework !== "function") {
+            return;
+          }
+          if (firework.disable_on_mobile && isMobileDevice()) return;
+
+          fireworkCleanup?.();
+          fireworkCleanup = window.firework(firework.options);
+        }
+
+        function bootFirework() {
+          if (typeof window.firework === "function") {
+            startFirework();
+            return;
+          }
+          window.setTimeout(bootFirework, 50);
+        }
+
+        bootFirework();
+        document.addEventListener("astro:page-load", startFirework);
+      </script>
+    </>
+  )
+}

@@ -1,0 +1,170 @@
+---
+type Props = {
+  title: string;
+  url: string;
+  script?: boolean;
+};
+
+const { title, url, script = false } = Astro.props;
+
+type ScriptTitleParts = {
+  prefix: string;
+  core: string;
+  suffix: string;
+};
+
+const parseScriptTitle = (value: string): ScriptTitleParts | null => {
+  const match = value.match(/^(\$ub)(J\dC\d)(.*)$/);
+  if (!match) return null;
+
+  return {
+    prefix: match[1],
+    core: match[2],
+    suffix: match[3],
+  };
+};
+
+const scriptTitle = script ? parseScriptTitle(title) : null;
+---
+
+<div>
+  <a href={url} id="logo">
+    <h1 class:list={{ "site-title-script": script }} data-aos="slide-up">
+      {
+        scriptTitle ? (
+          <>
+            <span class="site-title-prefix">
+              <span class="site-title-dollar">$</span>ub
+            </span>
+            <span class="site-title-core">
+              {
+                [...scriptTitle.core].map((char) => (
+                  <span
+                    class:list={{
+                      "site-title-letter": /[A-Za-z]/.test(char),
+                      "site-title-digit": /\d/.test(char),
+                      "site-title-letter-main": char === "J" || char === "C",
+                    }}
+                  >
+                    {char}
+                  </span>
+                ))
+              }
+            </span>
+            <span class="site-title-suffix">
+              {
+                [...scriptTitle.suffix].map((char) => (
+                  <span
+                    class:list={{
+                      "site-title-letter-main": char === "B",
+                    }}
+                  >
+                    {char}
+                  </span>
+                ))
+              }
+            </span>
+          </>
+        ) : (
+          title
+        )
+      }
+    </h1>
+  </a>
+</div>
+
+<style lang="stylus">
+  h1 {
+    text-decoration: none;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: inline-block;
+    transform: translateY(-20%);
+    text-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.7);
+
+    &.site-title-script {
+      font-family: "Great Vibes", "Zen Kurenaido", cursive;
+      font-weight: 400;
+      font-size: 56px;
+      letter-spacing: 0;
+      line-height: 1.1;
+
+      .site-title-prefix {
+        letter-spacing: -0.04em;
+        margin-right: -0.03em;
+      }
+
+      .site-title-dollar {
+        font-size: 2.22em;
+        display: inline-block;
+        vertical-align: baseline;
+        line-height: 0.9;
+        margin-right: -0.06em;
+      }
+
+      .site-title-core {
+        letter-spacing: 0;
+        margin-left: -0.72em;
+      }
+
+      .site-title-letter {
+        display: inline-block;
+        margin: 0 0.04em;
+      }
+
+      .site-title-letter-main {
+        display: inline-block;
+        font-size: 1.7em;
+        vertical-align: baseline;
+      }
+
+      .site-title-core .site-title-letter-main:first-child {
+        margin-left: -0.05em;
+        margin-right: 0.1em;
+      }
+
+      .site-title-core .site-title-letter-main:not(:first-child) {
+        margin-left: 0.06em;
+        margin-right: 0.1em;
+      }
+
+      .site-title-digit {
+        display: inline-block;
+        font-size: 0.84em;
+        vertical-align: 0.12em;
+        margin: 0 0.06em;
+      }
+
+      .site-title-suffix {
+        margin-left: 0.05em;
+        letter-spacing: -0.05em;
+      }
+    }
+
+    @media screen and (max-width: 959px) {
+      font-size: 36px;
+
+      &.site-title-script {
+        font-size: 48px;
+      }
+    }
+
+    @media screen and (min-width: 480px) and (max-width: 767px) {
+      font-size: 30px;
+
+      &.site-title-script {
+        font-size: 40px;
+      }
+    }
+
+    @media screen and (max-width: 479px) {
+      font-size: 30px;
+
+      &.site-title-script {
+        font-size: 36px;
+      }
+    }
+  }
+</style>

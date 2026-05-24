@@ -1,0 +1,101 @@
+:root {
+  --aplayer-pic-size: 150px;
+  --aplayer-max-width: calc(var(--aplayer-pic-size) * 4);
+  --aplayer-icon-bottom: calc(var(--aplayer-pic-size) * 0.4);
+}
+
+.music-player {
+  width: 100%;
+}
+
+.music-player-sidebar :global(.aplayer) {
+  margin: 0;
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  background: var(--color-wrap) !important;
+  font-family: inherit;
+}
+
+.music-player-fixed :global(.aplayer.aplayer-fixed) {
+  z-index: 150;
+}
+
+:global(.aplayer) {
+  font-family: inherit;
+}
+
+:global(.aplayer .aplayer-pic) {
+  width: var(--aplayer-pic-size) !important;
+  height: var(--aplayer-pic-size) !important;
+}
+
+:global(.aplayer:not(.aplayer-fixed) .aplayer-info) {
+  height: var(--aplayer-pic-size) !important;
+  margin-left: var(--aplayer-pic-size) !important;
+  padding-top: 16px !important;
+}
+
+:global(.aplayer.aplayer-fixed .aplayer-body) {
+  max-width: var(--aplayer-max-width) !important;
+}
+
+:global(.aplayer.aplayer-fixed) {
+  max-width: var(--aplayer-max-width) !important;
+}
+
+:global(.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body) {
+  width: var(--aplayer-pic-size) !important;
+}
+
+:global(.aplayer.aplayer-narrow .aplayer-body),
+:global(.aplayer.aplayer-narrow .aplayer-pic) {
+  width: var(--aplayer-pic-size) !important;
+  height: var(--aplayer-pic-size) !important;
+}
+
+:global(.aplayer.aplayer-fixed .aplayer-info) {
+  height: var(--aplayer-pic-size) !important;
+}
+
+:global(.aplayer .aplayer-title) {
+  font-size: 16px !important;
+}
+
+:global(.aplayer .aplayer-author) {
+  font-size: 13px !important;
+}
+
+:global(.aplayer.aplayer-fixed .aplayer-icon-back),
+:global(.aplayer.aplayer-fixed .aplayer-icon-forward),
+:global(.aplayer.aplayer-fixed .aplayer-icon-play) {
+  bottom: var(--aplayer-icon-bottom) !important;
+}
+
+:global(.aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-played) {
+  background: var(--red-1) !important;
+}
+
+:global(.aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-thumb) {
+  background: var(--red-0) !important;
+}
+
+:global(.aplayer .aplayer-list ol li.aplayer-list-light) {
+  background: var(--red-5) !important;
+}
+
+:global(.aplayer .aplayer-list ol li:hover) {
+  background: var(--red-5-5) !important;
+}
+
+:global([data-theme='dark'] .aplayer) {
+  background: var(--color-wrap) !important;
+  color: var(--grey-7);
+}
+
+:global([data-theme='dark'] .aplayer .aplayer-list) {
+  background: var(--color-wrap) !important;
+}
+
+:global([data-theme='dark'] .aplayer .aplayer-info) {
+  border-top-color: var(--color-border);
+}
