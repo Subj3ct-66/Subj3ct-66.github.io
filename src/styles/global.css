@@ -36,7 +36,7 @@
   --shadow-card: 0 0 10px 2px var(--color-hover-shadow);
   --shadow-card-hover: 0 0 10px 4px var(--color-hover-shadow);
   --shadow-red-6-shadow: 0 0 8px var(--color-red-6-shadow);
-  --post-cover-position: center 18%;
+  --post-cover-position: center center;
   --banner-position: center 12%;
   --banner-area-height: 75vh;
   --banner-area-min-height: 480px;
