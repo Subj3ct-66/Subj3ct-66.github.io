@@ -1,3 +1,6 @@
+@import "@fontsource/great-vibes/latin.css";
+@import "@fontsource/zen-kurenaido/japanese.css";
+
 :root {
   --red-0: #a8893a;
   --red-1: #c9ae6d;
@@ -353,6 +356,11 @@ body {
   }
 }
 
+#header-title #logo h1.site-title-script {
+  font-family: "Great Vibes", "Zen Kurenaido", cursive;
+  font-weight: 400;
+}
+
 #header-title #subtitle.site-subtitle-script {
   font-family: "Great Vibes", "Zen Kurenaido", cursive;
   font-size: 36px;
@@ -383,7 +391,8 @@ body {
 
 @media screen and (max-width: 767px) {
   #header-title {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: visible;
     max-width: 100%;
     box-sizing: border-box;
     padding: 0 6px;

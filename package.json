@@ -20,6 +20,8 @@
     "@astrojs/sitemap": "^3.7.0",
     "@expressive-code/plugin-collapsible-sections": "^0.41.7",
     "@expressive-code/plugin-line-numbers": "^0.41.7",
+    "@fontsource/great-vibes": "^5.2.8",
+    "@fontsource/zen-kurenaido": "^5.2.8",
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-regular-svg-icons": "^7.2.0",

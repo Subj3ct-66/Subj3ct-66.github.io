@@ -78,7 +78,8 @@ const scriptTitle = script ? parseScriptTitle(title) : null;
     max-width: 100%;
 
     @media screen and (max-width: 767px) {
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: visible;
     }
   }
 
@@ -93,8 +94,6 @@ const scriptTitle = script ? parseScriptTitle(title) : null;
     text-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.7);
 
     &.site-title-script {
-      font-family: "Great Vibes", "Zen Kurenaido", cursive;
-      font-weight: 400;
       font-size: 56px;
       letter-spacing: 0;
       line-height: 1.1;
