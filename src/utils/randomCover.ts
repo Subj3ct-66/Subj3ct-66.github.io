@@ -1,30 +1,48 @@
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+
 import covers from "../covers";
 
-let shuffledCovers: string[] = [];
-let currentIndex = 0;
-
-// Fisher-Yates 洗牌算法
-function shuffleArray(array: string[]) {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
+/** Assign cover by list position (cycles through covers.ts). */
+export function coverForIndex(index: number): string | null {
+  if (!covers.length) return null;
+  return covers[((index % covers.length) + covers.length) % covers.length];
 }
 
-export default () => {
-  if (!covers || covers.length === 0) {
-    return null;
+/** Assign cover by stable string key (e.g. category name). */
+export function coverForKey(key: string): string | null {
+  if (!covers.length) return null;
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
   }
+  return covers[hash % covers.length];
+}
 
-  if (shuffledCovers.length === 0 || currentIndex >= shuffledCovers.length) {
-    shuffledCovers = shuffleArray(covers);
-    currentIndex = 0;
+let sortedPosts: CollectionEntry<"blog">[] | null = null;
+
+export async function getSortedBlogPosts() {
+  if (!sortedPosts) {
+    const posts = await getCollection("blog");
+    sortedPosts = posts.sort(
+      (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    );
   }
+  return sortedPosts;
+}
 
-  const cover = shuffledCovers[currentIndex];
-  currentIndex++;
+export function postListIndex(
+  posts: CollectionEntry<"blog">[],
+  id: string
+): number {
+  const index = posts.findIndex((p) => p.id === id);
+  return index >= 0 ? index : 0;
+}
 
-  return cover;
-};
+export async function postCoverForEntry(
+  post: CollectionEntry<"blog">
+): Promise<string | null> {
+  if (post.data.cover) return post.data.cover;
+  const posts = await getSortedBlogPosts();
+  return coverForIndex(postListIndex(posts, post.id));
+}

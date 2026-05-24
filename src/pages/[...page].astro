@@ -5,7 +5,7 @@ import { Icon } from "astro-icon/components";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { SITE, HOME_CATEGORIES, BANNER } from "../utils/config";
-import randomCover from "../utils/randomCover";
+import { coverForIndex } from "../utils/randomCover";
 import { _p } from "../utils/i18n";
 import { wordCount, readingTime } from "../utils/wordCount";
 import Footer from "../components/Footer.astro";
@@ -19,6 +19,7 @@ import { urlFor } from "../utils/urlFor";
 type Props = {
   page: {
     data: CollectionEntry<"blog">[];
+    start: number;
     url: {
       prev: string;
       next: string;
@@ -75,7 +76,9 @@ const { page } = Astro.props;
                 loading="lazy"
                 decoding="async"
                 fetchpriority="low"
-                src={urlFor(post.data.cover || randomCover() || BANNER)}
+                src={urlFor(
+                  post.data.cover || coverForIndex(page.start + index) || BANNER
+                )}
                 alt={post.data.title}
               />
             </div>

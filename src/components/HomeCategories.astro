@@ -1,6 +1,6 @@
 ---
 import { BANNER } from "../utils/config";
-import randomCover from "../utils/randomCover";
+import { coverForIndex } from "../utils/randomCover";
 import { _p } from "../utils/i18n";
 import parseHomeCategories from "../utils/parseHomeCategories";
 import { urlFor } from "../utils/urlFor";
@@ -30,7 +30,7 @@ const parsedContent = (
 
 <div class="post-categories-wrapper" data-aos="fade-up">
   {
-    parsedContent.map(({ item, c }) => {
+    parsedContent.map(({ item, c }, index) => {
       if (!c) return null;
       return (
         <div class="post-categories-wrap">
@@ -42,7 +42,7 @@ const parsedContent = (
           />
           <div class="post-categories-cover">
             <img
-              src={urlFor(item.cover || randomCover() || BANNER)}
+              src={urlFor(item.cover || coverForIndex(index) || BANNER)}
               alt={c.name}
               loading="lazy"
               decoding="async"

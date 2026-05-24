@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 
 import { BANNER, SITE } from "../../utils/config";
+import { postCoverForEntry } from "../../utils/randomCover";
 import { urlFor } from "../../utils/urlFor";
 import { stripHTML } from "../../utils/stripHTML";
 
@@ -10,7 +11,7 @@ type Props = {
 };
 
 const { post } = Astro.props;
-const absoluteCoverUrl = urlFor(post.data.cover || BANNER, true);
+const absoluteCoverUrl = urlFor((await postCoverForEntry(post)) || BANNER, true);
 const postUrl = urlFor(`blog/${post.id}`, true);
 ---
 

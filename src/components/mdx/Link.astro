@@ -4,6 +4,7 @@ import "../../styles/container.stylus";
 import { Icon } from "astro-icon/components";
 
 import { BANNER } from "../../utils/config";
+import { postCoverForEntry } from "../../utils/randomCover";
 import { stripHTML } from "../../utils/stripHTML";
 import { urlFor } from "../../utils/urlFor";
 
@@ -35,10 +36,12 @@ if (slug) {
 
   link = urlFor(`blog/${post.id}`);
 
+  const assignedCover = (await postCoverForEntry(post)) || BANNER;
+
   if (cover === "auto") {
-    finalCover = post.data.cover || BANNER;
+    finalCover = assignedCover;
   } else {
-    finalCover = cover || post.data.cover || BANNER;
+    finalCover = cover || assignedCover;
   }
 
   description = post.data.excerpt || post.data.description || "";
