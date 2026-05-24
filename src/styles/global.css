@@ -390,16 +390,33 @@ body {
 }
 
 @media screen and (max-width: 767px) {
+  html,
+  body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
   #header-title {
-    overflow-x: hidden;
+    overflow-x: clip;
     overflow-y: visible;
+    width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 0 6px;
+    padding: 0 14px;
+  }
+
+  #header-title #logo {
+    display: block;
+    width: 100%;
+  }
+
+  #header-title #logo h1.site-title-script {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   #header-title #subtitle {
-    width: 94%;
+    width: 100%;
   }
 
   #footer {
