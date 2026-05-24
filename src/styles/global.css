@@ -404,7 +404,7 @@ body {
   }
 
   #header-title #subtitle.site-subtitle-script {
-    transform: scale(min(1, calc((100vw - 32px) / 480px), calc(767 / 959)));
+    transform: scale(0.5);
     transform-origin: center center;
   }
 
@@ -414,12 +414,5 @@ body {
 
   #footer {
     padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
-  }
-}
-
-@media screen and (max-width: 479px) {
-  #header-title #subtitle.site-subtitle-script {
-    transform: scale(min(1, calc((100vw - 32px) / 480px), calc(479 / 959)));
-    transform-origin: center center;
   }
 }

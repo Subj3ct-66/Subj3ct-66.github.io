@@ -172,14 +172,7 @@ const scriptTitle = script ? parseScriptTitle(title) : null;
       max-width: 100%;
 
       &.site-title-script {
-        transform: unquote('translateY(-20%) scale(min(1, calc((100vw - 32px) / 480px), calc(767 / 959)))');
-        transform-origin: center center;
-      }
-    }
-
-    @media screen and (max-width: 479px) {
-      &.site-title-script {
-        transform: unquote('translateY(-20%) scale(min(1, calc((100vw - 32px) / 480px), calc(479 / 959)))');
+        transform: unquote('translateY(-20%) scale(0.5)');
         transform-origin: center center;
       }
     }

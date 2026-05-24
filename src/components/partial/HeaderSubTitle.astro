@@ -17,6 +17,10 @@ const { subtitle, url, script = false } = Astro.props;
 <style lang="stylus">
   #subtitle-wrap {
     margin-top: 18px;
+
+    @media screen and (max-width: 767px) {
+      margin-top: 9px;
+    }
   }
 
   #subtitle {
