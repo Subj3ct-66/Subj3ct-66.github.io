@@ -86,7 +86,7 @@ export default {
 
   firework: {
     enable: true,
-    disable_on_mobile: true,
+    disable_on_mobile: false,
     options: {
       excludeElements: ["a", "button"],
       particles: [
