@@ -76,7 +76,10 @@ const scriptTitle = script ? parseScriptTitle(title) : null;
 <style lang="stylus">
   .header-title-wrap {
     max-width: 100%;
-    overflow: hidden;
+
+    @media screen and (max-width: 767px) {
+      overflow: hidden;
+    }
   }
 
   h1 {
