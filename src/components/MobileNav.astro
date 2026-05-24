@@ -36,6 +36,7 @@ const { isPost = false, headings = [], toc = true } = Astro.props;
       z-index: 1001;
       transition: 0.3s;
       overflow: auto;
+      padding-top: env(safe-area-inset-top, 0);
 
       &::-webkit-scrollbar {
         width: 8px;

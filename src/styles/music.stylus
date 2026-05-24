@@ -99,3 +99,22 @@
 :global([data-theme='dark'] .aplayer .aplayer-info) {
   border-top-color: var(--color-border);
 }
+
+@media screen and (max-width: 767px) {
+  :root {
+    --aplayer-pic-size: 72px;
+  }
+
+  :global(.aplayer .aplayer-title) {
+    font-size: 14px !important;
+  }
+
+  :global(.aplayer .aplayer-author) {
+    font-size: 12px !important;
+  }
+
+  :global(.aplayer.aplayer-fixed) {
+    left: env(safe-area-inset-left, 0);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}

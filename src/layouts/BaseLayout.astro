@@ -80,9 +80,10 @@ const headerImage = cover || BANNER;
       @media screen and (max-width: 767px) {
         main {
           margin-top: max(
-            calc(var(--banner-area-height) * 0.12 * -1),
-            -96px
+            calc(var(--banner-area-height) * var(--content-overlap-ratio) * -1),
+            calc(var(--banner-area-min-height) * var(--content-overlap-ratio) * -1)
           );
+          padding-top: 4px;
         }
       }
     </style>

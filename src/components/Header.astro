@@ -116,6 +116,7 @@ const { title = SITE.title, cover } = Astro.props;
     box-shadow: var(--shadow-card);
     transition: background 1s, top 0.3s;
     z-index: 200;
+    padding-top: env(safe-area-inset-top, 0);
     &.header-nav-hidden {
       top: -80px;
     }
@@ -214,6 +215,13 @@ const { title = SITE.title, cover } = Astro.props;
     filter: blur(8px);
     will-change: transform, opacity, filter;
     animation: fade-in-blur 800ms ease-out 200ms forwards;
+
+    @media screen and (max-width: 767px) {
+      top: 54%;
+      width: 98%;
+      margin-left: 1%;
+      margin-right: 0;
+    }
   }
 
   #sub-nav {

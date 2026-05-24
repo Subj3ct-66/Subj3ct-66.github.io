@@ -161,7 +161,8 @@ const { page } = Astro.props;
 
     @media screen and (max-width: 767px) {
       flex-direction: column;
-      height: 400px;
+      height: auto;
+      min-height: 320px;
       margin-bottom: 20px;
       &.right {
         flex-direction: column;
@@ -250,6 +251,23 @@ const { page } = Astro.props;
     white-space: nowrap;
   }
 
+  .post-title {
+    padding: 20px 0;
+    color: var(--color-link);
+    font-size: 25px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s;
+
+    @media screen and (max-width: 767px) {
+      font-size: 20px;
+      padding: 14px 0;
+      letter-spacing: 0.5px;
+    }
+  }
+
   .post-article {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -258,6 +276,12 @@ const { page } = Astro.props;
     line-height: 32px;
     font-size: 15px;
     color: var(--grey-7);
+
+    @media screen and (max-width: 767px) {
+      font-size: 14px;
+      line-height: 24px;
+      -webkit-line-clamp: 2;
+    }
 
     a {
       color: var(--color-link);
@@ -309,16 +333,5 @@ const { page } = Astro.props;
       width: 100%;
       height: 100%;
     }
-  }
-
-  .post-title {
-    padding: 20px 0;
-    color: var(--color-link);
-    font-size: 25px;
-    letter-spacing: 1px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: color 0.3s;
   }
 </style>

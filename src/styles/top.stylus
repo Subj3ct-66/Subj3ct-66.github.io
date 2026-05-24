@@ -13,6 +13,13 @@
   transition: opacity 1s;
   cursor: pointer;
 
+  @media screen and (max-width: 767px) {
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    width: 44px;
+    height: 44px;
+  }
+
   img {
     transition: .3s;
     animation: rotate-all 3s linear infinite;
