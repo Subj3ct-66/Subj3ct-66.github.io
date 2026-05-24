@@ -1,6 +1,7 @@
 ---
 title: 如何利用MCP协议来实现agent自动逆向
 description: 这篇文章旨在帮助我们实现agent自动逆向.
+cover: /images/ca02e2d6753440e1fbf62be6300f4c95503d54d7.jpg@1192w.avif
 pubDate: 2026-05-22
 tags:
   - mcp
