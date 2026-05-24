@@ -18,7 +18,7 @@
     "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
-    "@expressive-code/plugin-collapsible-sections": "^0.41.7",
+    "@expressive-code/plugin-collapsible-sections": "^0.42.0",
     "@expressive-code/plugin-line-numbers": "^0.41.7",
     "@fontsource/great-vibes": "^5.2.8",
     "@fontsource/zen-kurenaido": "^5.2.8",
