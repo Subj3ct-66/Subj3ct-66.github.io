@@ -64,6 +64,13 @@
     border-radius: 12px;
   }
 
+  a.article-gallery-item {
+    display: block;
+    margin: 16px auto;
+    width: fit-content;
+    max-width: 100%;
+  }
+
   iframe {
     border: none;
     border-radius: 12px;

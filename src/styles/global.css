@@ -223,7 +223,6 @@ body {
   -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;
   transition: background 1s;
-  text-autospace: normal;
   color: var(--color-default);
   font-family: 'LXGW WenKai Screen', -apple-system, PingFang SC,
     Microsoft YaHei, sans-serif;
@@ -403,9 +402,18 @@ body {
     box-sizing: border-box;
   }
 
+  #header-title #logo h1[data-aos="slide-up"],
+  #header-title #logo h1[data-aos="slide-up"].aos-animate {
+    transform: translateY(-20%) !important;
+  }
+
   #header-title #subtitle.site-subtitle-script {
-    transform: scale(0.5);
-    transform-origin: center center;
+    font-size: 18px;
+  }
+
+  #subtitle-wrap[data-aos="slide-down"],
+  #subtitle-wrap[data-aos="slide-down"].aos-animate {
+    transform: none !important;
   }
 
   #header-title #subtitle {
