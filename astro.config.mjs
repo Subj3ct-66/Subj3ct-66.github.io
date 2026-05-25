@@ -7,6 +7,7 @@ import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 import icon from "astro-icon";
 import react from "@astrojs/react";
 import remarkMath from 'remark-math';
+import remarkBreaks from 'remark-breaks';
 import rehypeKatex from 'rehype-katex';
 import mermaid from './src/plugins/mermaid.mjs';
 import rehypeLazyLoadImage from './src/plugins/lazyLoadImage.mjs';
@@ -16,7 +17,7 @@ export default defineConfig({
   site: process.env.SITE_URL ?? 'https://example.com',
   base: process.env.BASE_PATH ?? '/',
   markdown: {
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkMath, remarkBreaks],
     rehypePlugins: [rehypeKatex, rehypeLazyLoadImage],
     syntaxHighlight: false
   },
