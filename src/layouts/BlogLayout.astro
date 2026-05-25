@@ -72,7 +72,14 @@ const hasComment =
       </footer>
     )
   }
-  {nav && <Nav {...nav} slot="nav" />}
+  {nav && (
+    <Nav
+      {...nav}
+      navPrevCoverPosition={frontmatter.navPrevCoverPosition}
+      navNextCoverPosition={frontmatter.navNextCoverPosition}
+      slot="nav"
+    />
+  )}
 </MarkdownLayout>
 
 <style>
