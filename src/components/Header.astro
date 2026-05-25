@@ -64,7 +64,7 @@ const { title = SITE.title, cover } = Astro.props;
     )
   }
 </div>
-<header id="header">
+<header id="header" class:list={[{ "has-post-cover": !!cover }]}>
   {
     cover ? (
       <img src={urlFor(cover)} alt={title} fetchpriority="high" />
@@ -162,6 +162,10 @@ const { title = SITE.title, cover } = Astro.props;
       @media screen and (max-width: 767px) {
         height: var(--banner-image-scale, 100%);
       }
+    }
+
+    &.has-post-cover img {
+      object-position: var(--post-cover-position, center center);
     }
   }
 
