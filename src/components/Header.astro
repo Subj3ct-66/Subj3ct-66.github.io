@@ -20,9 +20,14 @@ type Props = {
   title?: string;
   cover?: string;
   coverPosition?: string;
+  headerCoverPosition?: string;
 };
 
-const { title = SITE.title, cover, coverPosition } = Astro.props;
+const { title = SITE.title, cover, coverPosition, headerCoverPosition } =
+  Astro.props;
+
+const postCoverPosition =
+  headerCoverPosition ?? coverPosition ?? "center top";
 ---
 
 <div id="header-nav">
@@ -72,7 +77,7 @@ const { title = SITE.title, cover, coverPosition } = Astro.props;
         src={urlFor(cover)}
         alt={title}
         fetchpriority="high"
-        style={coverPosition ? { objectPosition: coverPosition } : undefined}
+        style={cover ? { objectPosition: postCoverPosition } : undefined}
       />
     ) : BANNER_SRCSET.enable ? (
       <picture style="user-select: none;">

@@ -27,6 +27,7 @@ type Props = {
   description?: string;
   cover?: string;
   coverPosition?: string;
+  headerCoverPosition?: string;
   keywords?: string | string[];
   isPost?: boolean;
   headings?: Array<{
@@ -42,6 +43,7 @@ const {
   description = SITE.description,
   cover,
   coverPosition,
+  headerCoverPosition,
   keywords = SITE.keywords,
   isPost = false,
   headings = [],
@@ -88,7 +90,12 @@ const headerImage = cover || BANNER;
   </head>
   <body>
     {PRELOADER.enable && <Loader />}
-    <Header title={title} cover={cover} coverPosition={coverPosition}>
+    <Header
+      title={title}
+      cover={cover}
+      coverPosition={coverPosition}
+      headerCoverPosition={headerCoverPosition}
+    >
       <slot name="header" />
     </Header>
 
