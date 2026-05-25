@@ -94,4 +94,10 @@ export default {
     title: "贊助",
     tip: "請作者喝杯咖啡吧"
   },
+
+  like: {
+    action: "點讚",
+    liked: "已讚",
+    count: "次讚",
+  },
 };

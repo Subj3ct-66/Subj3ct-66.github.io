@@ -9,6 +9,7 @@ import {
   WALINE,
   SHARE,
   SPONSOR,
+  LIKE,
 } from "../utils/config";
 import Tag from "../components/post/Tag.astro";
 import Nav from "../components/post/Nav.astro";
@@ -19,6 +20,7 @@ import Outdate from "../components/post/Outdate.astro";
 import Share from "../components/post/Share.astro";
 import Sponsor from "../components/post/Sponsor.astro";
 import Category from "../components/post/Category.astro";
+import PostLike from "../components/post/PostLike.astro";
 
 import MarkdownLayout from "./MarkdownLayout.astro";
 
@@ -46,6 +48,7 @@ const hasComment =
     (WALINE.enable && WALINE.serverURL) ||
     (TWIKOO.enable && TWIKOO.envId) ||
     (DISQUS.enable && DISQUS.shortname && DISQUS.count));
+const showLike = LIKE.enable && frontmatter.like !== false;
 ---
 
 <MarkdownLayout frontmatter={frontmatter} headings={headings}>
@@ -56,8 +59,9 @@ const hasComment =
   />
   <slot />
   {
-    (tags.length || categories.length || COPYRIGHT.enable || hasComment) && (
+    (tags.length || categories.length || COPYRIGHT.enable || hasComment || showLike) && (
       <footer class="article-footer" slot="footer">
+        {showLike && <PostLike url={url} />}
         <Copyright frontmatter={frontmatter} url={url} />
         {(SPONSOR?.enable && frontmatter.sponsor !== false || frontmatter.sponsor) && <Sponsor />}
         {SHARE?.length > 0 && frontmatter.share !== false && <Share post={post} />}

@@ -94,4 +94,10 @@ export default {
     title: "Sponsor",
     tip: "Buy me a coffee"
   },
+
+  like: {
+    action: "Like",
+    liked: "Liked",
+    count: "likes",
+  },
 };

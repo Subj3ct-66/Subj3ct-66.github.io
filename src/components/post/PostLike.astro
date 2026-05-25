@@ -1,0 +1,63 @@
+---
+import { LIKE } from "../../utils/config";
+import { __ } from "../../utils/i18n";
+import { urlFor } from "../../utils/urlFor";
+import PostLikeButton from "./PostLikeButton.tsx";
+
+type Props = {
+  url: string;
+};
+
+const { url } = Astro.props;
+const apiURL = LIKE.apiURL || "https://bttn.love/api/love";
+---
+
+{
+  LIKE.enable && (
+    <PostLikeButton
+      client:idle
+      pageUrl={urlFor(`${url}/`, true)}
+      apiURL={apiURL}
+      likeLabel={__("like.action")}
+      likedLabel={__("like.liked")}
+      likesLabel={__("like.count")}
+    />
+  )
+}
+
+<style is:global>
+  .post-like-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--red-1);
+    background: var(--red-5);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.2s;
+  }
+
+  .post-like-button:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+
+  .post-like-button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+  }
+
+  .post-like-button.is-liked {
+    color: var(--red-0);
+    background: var(--red-1);
+  }
+
+  .post-like-count {
+    opacity: 0.9;
+  }
+</style>

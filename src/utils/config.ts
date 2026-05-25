@@ -243,6 +243,11 @@ export interface PlayerConfig {
   meting: MetingConfig;
 }
 
+export interface LikeConfig {
+  enable: boolean;
+  apiURL: string;
+}
+
 import config from "../config";
 
 const typedConfig = config as {
@@ -271,6 +276,7 @@ const typedConfig = config as {
   outdate: OutdateConfig;
   share: string[];
   sponsor: SponsorConfig;
+  like: LikeConfig;
   player: PlayerConfig;
 };
 
@@ -299,6 +305,7 @@ export const TRIANGLE_BADGE = typedConfig.triangle_badge;
 export const OUTDATE = typedConfig.outdate;
 export const SHARE = typedConfig.share;
 export const SPONSOR = typedConfig.sponsor;
+export const LIKE = typedConfig.like;
 export const PLAYER = typedConfig.player;
 
 export const PLAYER_HAS_SOURCE =

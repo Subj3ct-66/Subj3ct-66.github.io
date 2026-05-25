@@ -97,4 +97,10 @@ export default {
     title: "スポンサー",
     tip: "コーヒーを買ってください",
   },
+
+  like: {
+    action: "いいね",
+    liked: "いいね済み",
+    count: "件",
+  },
 };

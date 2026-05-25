@@ -123,6 +123,12 @@ export default {
   share: ["weibo", "qq", "weixin"],
   sponsor: { enable: false, qr: [] },
 
+  // 文章点赞（bttn.love，免费、无需注册）。也可换成自托管的 Love Button API。
+  like: {
+    enable: true,
+    apiURL: "https://bttn.love/api/love",
+  },
+
   player: {
     enable: true,
     position: "after_widget",
