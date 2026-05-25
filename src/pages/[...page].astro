@@ -80,6 +80,11 @@ const { page } = Astro.props;
                   post.data.cover || coverForIndex(page.start + index) || BANNER
                 )}
                 alt={post.data.title}
+                style={
+                  post.data.coverPosition
+                    ? { objectPosition: post.data.coverPosition }
+                    : undefined
+                }
               />
             </div>
             <div class="post-info">
