@@ -115,7 +115,9 @@ export default function PostLikeButton({
       disabled={loading || submitting}
       onClick={handleToggle}
     >
-      <FontAwesomeIcon icon={faHeart} />
+      <span className="post-like-icon">
+        <FontAwesomeIcon icon={faHeart} />
+      </span>
       <span className="post-like-text">{liked ? likedLabel : likeLabel}</span>
       <span className="post-like-count">
         {count} {likesLabel}
