@@ -16,7 +16,7 @@ const apiURL = LIKE.apiURL || "https://bttn.love/api/love";
   LIKE.enable && (
     <PostLikeButton
       client:idle
-      pageUrl={urlFor(`${url}/`, true)}
+      pageUrl={urlFor(url)}
       apiURL={apiURL}
       likeLabel={__("like.action")}
       likedLabel={__("like.liked")}

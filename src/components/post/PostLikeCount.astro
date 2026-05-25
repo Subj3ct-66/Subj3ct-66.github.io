@@ -1,0 +1,45 @@
+---
+import { LIKE } from "../../utils/config";
+import { __ } from "../../utils/i18n";
+import PostLikeCount from "./PostLikeCount.tsx";
+
+type Props = {
+  url: string;
+  compact?: boolean;
+};
+
+const { url, compact = false } = Astro.props;
+const apiURL = LIKE.apiURL || "https://bttn.love/api/love";
+---
+
+{
+  LIKE.enable && (
+    <PostLikeCount
+      client:visible
+      pageUrl={url}
+      apiURL={apiURL}
+      likesLabel={__("like.count")}
+      compact={compact}
+    />
+  )
+}
+
+<style is:global>
+  .post-like-count-display {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: var(--grey-7);
+    line-height: 1;
+  }
+
+  .post-like-count-display svg {
+    color: #e53935;
+    font-size: 13px;
+  }
+
+  .post-like-count-label {
+    margin-left: 2px;
+  }
+</style>

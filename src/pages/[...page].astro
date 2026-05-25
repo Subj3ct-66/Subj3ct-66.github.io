@@ -4,7 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
 
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { SITE, HOME_CATEGORIES, BANNER } from "../utils/config";
+import { SITE, HOME_CATEGORIES, BANNER, LIKE } from "../utils/config";
 import { coverForIndex } from "../utils/randomCover";
 import { _p } from "../utils/i18n";
 import { wordCount, readingTime } from "../utils/wordCount";
@@ -13,6 +13,7 @@ import Pagination from "../components/Pagination.astro";
 import HeaderTitle from "../components/partial/HeaderTitle.astro";
 import HeaderSubTitle from "../components/partial/HeaderSubTitle.astro";
 import HomeCategories from "../components/HomeCategories.astro";
+import PostLikeCount from "../components/post/PostLikeCount.astro";
 import { formatDate } from "../utils/formatDate";
 import { urlFor } from "../utils/urlFor";
 
@@ -104,6 +105,16 @@ const { page } = Astro.props;
                   &nbsp;
                   {_p("post.time", readingTime(post.body || ""))}
                 </span>
+                {
+                  LIKE.enable && post.data.like !== false && (
+                    <span>
+                      <PostLikeCount
+                        url={urlFor(`blog/${post.id}`)}
+                        compact
+                      />
+                    </span>
+                  )
+                }
               </div>
               <h2 class="post-title">{post.data.title}</h2>
               <article class="post-article">

@@ -2,6 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
+import {
+  fetchLikeCount,
+  likeStorageKey,
+  resolveLikeTargetUrl,
+} from "../../utils/postLike";
+
 type Props = {
   pageUrl: string;
   apiURL: string;
@@ -10,21 +16,6 @@ type Props = {
   likesLabel: string;
 };
 
-function normalizeUrl(url: string): string {
-  try {
-    const parsed = new URL(url);
-    let path = parsed.pathname + parsed.search + parsed.hash;
-    if (path === "/") path = "";
-    return parsed.hostname.replace(/^www\./, "") + path;
-  } catch {
-    return url;
-  }
-}
-
-function storageKey(url: string) {
-  return `blog-like-${url}`;
-}
-
 export default function PostLikeButton({
   pageUrl,
   apiURL,
@@ -32,17 +23,25 @@ export default function PostLikeButton({
   likedLabel,
   likesLabel,
 }: Props) {
-  const [targetUrl, setTargetUrl] = useState(() => normalizeUrl(pageUrl));
+  const [targetUrl, setTargetUrl] = useState(() => resolveLikeTargetUrl(pageUrl));
   const [count, setCount] = useState(0);
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setTargetUrl(normalizeUrl(window.location.href));
-    }
-  }, []);
+    const syncUrl = () => {
+      setTargetUrl(
+        resolveLikeTargetUrl(
+          typeof window !== "undefined" ? window.location.pathname : pageUrl
+        )
+      );
+    };
+
+    syncUrl();
+    document.addEventListener("astro:page-load", syncUrl);
+    return () => document.removeEventListener("astro:page-load", syncUrl);
+  }, [pageUrl]);
 
   const loadState = useCallback(async () => {
     const response = await fetch(
@@ -53,7 +52,7 @@ export default function PostLikeButton({
     }
     const data = await response.json();
     setCount(data.count ?? 0);
-    setLiked(localStorage.getItem(storageKey(targetUrl)) === "1");
+    setLiked(localStorage.getItem(likeStorageKey(targetUrl)) === "1");
   }, [apiURL, targetUrl]);
 
   useEffect(() => {
@@ -95,9 +94,9 @@ export default function PostLikeButton({
       setCount(data.count ?? 0);
       setLiked(nextLiked);
       if (nextLiked) {
-        localStorage.setItem(storageKey(targetUrl), "1");
+        localStorage.setItem(likeStorageKey(targetUrl), "1");
       } else {
-        localStorage.removeItem(storageKey(targetUrl));
+        localStorage.removeItem(likeStorageKey(targetUrl));
       }
     } catch {
       await loadState();
