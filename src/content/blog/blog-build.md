@@ -2,7 +2,7 @@
 title: 如何利用agent实现blog的搭建
 description: 啥都不会的小白也能搭建一个美观的blog!
 cover: /images/bf2d62430e29763ef1ae18ab70a33ddda9399fac.jpg@.avif
-coverPosition: center 25%
+coverPosition: center 12%
 pubDate: 2026-05-22
 tags:
   - blog
