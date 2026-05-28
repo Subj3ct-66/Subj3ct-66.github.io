@@ -59,7 +59,13 @@ export default {
   waline: { enable: false },
   gitalk: { enable: false },
   giscus: { enable: false },
-  utterances: { enable: false },
+  // 基于 GitHub Issues，适合 GitHub Pages（首次评论需授权 utterances 应用）
+  utterances: {
+    enable: true,
+    repo: "Subj3ct-66/Subj3ct-66.github.io",
+    issue_term: "pathname",
+    theme: "auto",
+  },
   twikoo: { enable: false },
   disqus: { enable: false },
 

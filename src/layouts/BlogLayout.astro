@@ -7,6 +7,9 @@ import {
   TWIKOO,
   VALINE,
   WALINE,
+  UTTERANCES,
+  GISCUS,
+  GITALK,
   SHARE,
   SPONSOR,
   LIKE,
@@ -47,7 +50,10 @@ const hasComment =
   ((VALINE.enable && VALINE.appId && VALINE.appKey) ||
     (WALINE.enable && WALINE.serverURL) ||
     (TWIKOO.enable && TWIKOO.envId) ||
-    (DISQUS.enable && DISQUS.shortname && DISQUS.count));
+    (DISQUS.enable && DISQUS.shortname && DISQUS.count) ||
+    (UTTERANCES.enable && UTTERANCES.repo) ||
+    (GISCUS.enable && GISCUS.repo && GISCUS.repoId && GISCUS.categoryId) ||
+    (GITALK.enable && GITALK.clientID && GITALK.repo));
 const showLike = LIKE.enable && frontmatter.like !== false;
 ---
 

@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 
 import { __ } from "../../utils/i18n";
-import { VALINE, WALINE, TWIKOO, DISQUS } from "../../utils/config";
+import { VALINE, WALINE, TWIKOO, DISQUS, UTTERANCES, GISCUS } from "../../utils/config";
 import { urlFor } from "../../utils/urlFor";
 
 type Props = {
@@ -80,6 +80,36 @@ const { url } = Astro.props;
       class="article-comment-link"
       id="disqus-count"
     />
+  )
+}
+{
+  UTTERANCES.enable && UTTERANCES.repo && (
+    <a
+      data-aos="zoom-in"
+      href={urlFor(`${url}#comments`)}
+      class="article-comment-link"
+    >
+      <Icon
+        name="fa6-solid:comment"
+        style="margin-right: 8px; vertical-align: bottom;"
+      />
+      {__("comment")}
+    </a>
+  )
+}
+{
+  GISCUS.enable && GISCUS.repo && GISCUS.repoId && GISCUS.categoryId && (
+    <a
+      data-aos="zoom-in"
+      href={urlFor(`${url}#comments`)}
+      class="article-comment-link"
+    >
+      <Icon
+        name="fa6-solid:comment"
+        style="margin-right: 8px; vertical-align: bottom;"
+      />
+      {__("comment")}
+    </a>
   )
 }
 
