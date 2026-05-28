@@ -111,6 +111,13 @@ export interface UtterancesConfig {
   theme: string;
 }
 
+export interface BeaudarConfig {
+  enable: boolean;
+  repo: string;
+  issue_term: string;
+  theme: string;
+}
+
 export interface TwikooConfig {
   enable: boolean;
   envId: string;
@@ -260,6 +267,7 @@ const typedConfig = config as {
   gitalk: GitalkConfig;
   giscus: GiscusConfig;
   utterances: UtterancesConfig;
+  beaudar: BeaudarConfig;
   twikoo: TwikooConfig;
   disqus: DisqusConfig;
   friend: FriendConfig[];
@@ -289,6 +297,7 @@ export const WALINE = typedConfig.waline;
 export const GITALK = typedConfig.gitalk;
 export const GISCUS = typedConfig.giscus;
 export const UTTERANCES = typedConfig.utterances;
+export const BEAUDAR = typedConfig.beaudar;
 export const TWIKOO = typedConfig.twikoo;
 export const DISQUS = typedConfig.disqus;
 export const FRIEND = typedConfig.friend;

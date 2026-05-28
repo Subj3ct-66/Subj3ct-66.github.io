@@ -59,8 +59,9 @@ export default {
   waline: { enable: false },
   gitalk: { enable: false },
   giscus: { enable: false },
-  // 基于 GitHub Issues，适合 GitHub Pages（首次评论需授权 utterances 应用）
-  utterances: {
+  utterances: { enable: false },
+  // Beaudar：Utterances 中文版，同样使用 GitHub Issues（需安装 beaudar 应用）
+  beaudar: {
     enable: true,
     repo: "Subj3ct-66/Subj3ct-66.github.io",
     issue_term: "pathname",

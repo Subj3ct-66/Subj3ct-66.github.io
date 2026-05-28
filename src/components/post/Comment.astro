@@ -1,11 +1,12 @@
 ---
-import { VALINE, WALINE, GITALK, GISCUS, UTTERANCES, TWIKOO, DISQUS } from "../../utils/config";
+import { VALINE, WALINE, GITALK, GISCUS, UTTERANCES, BEAUDAR, TWIKOO, DISQUS } from "../../utils/config";
 
 import ValineComment from "./comment/ValineComment.astro";
 import WalineComment from "./comment/WalineComment.astro";
 import GitalkComment from "./comment/GitalkComment.astro";
 import GiscusComment from "./comment/GiscusComment.astro";
 import UtterancesComment from "./comment/UtterancesComment.astro";
+import BeaudarComment from "./comment/BeaudarComment.astro";
 import TwikooComment from "./comment/TwikooComment.astro";
 import DisqusComment from "./comment/DisqusComment.astro";
 
@@ -23,6 +24,7 @@ const { comment } = Astro.props;
 {comment && TWIKOO.enable && <TwikooComment />}
 {comment && DISQUS.enable && <DisqusComment />}
 {comment && UTTERANCES.enable && <UtterancesComment />}
+{comment && BEAUDAR.enable && <BeaudarComment />}
 <style lang="stylus" is:global>
   #comments {
     background: var(--color-wrap);

@@ -8,6 +8,7 @@ import {
   VALINE,
   WALINE,
   UTTERANCES,
+  BEAUDAR,
   GISCUS,
   GITALK,
   SHARE,
@@ -52,6 +53,7 @@ const hasComment =
     (TWIKOO.enable && TWIKOO.envId) ||
     (DISQUS.enable && DISQUS.shortname && DISQUS.count) ||
     (UTTERANCES.enable && UTTERANCES.repo) ||
+    (BEAUDAR.enable && BEAUDAR.repo) ||
     (GISCUS.enable && GISCUS.repo && GISCUS.repoId && GISCUS.categoryId) ||
     (GITALK.enable && GITALK.clientID && GITALK.repo));
 const showLike = LIKE.enable && frontmatter.like !== false;
