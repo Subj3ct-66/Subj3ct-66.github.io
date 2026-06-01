@@ -5,7 +5,34 @@ import { BEAUDAR } from "../../../utils/config";
 <div id="comments" class="beaudar-comment" data-aos="fade-up"></div>
 
 <script data-astro-rerun is:inline define:vars={{ BEAUDAR }}>
-  const container = document.querySelector(".beaudar-comment");
+  function setupBeaudar() {
+    const container = document.querySelector(".beaudar-comment");
+    if (!container) return;
+
+    container.innerHTML = "";
+    document.getElementById("beaudar-script")?.remove();
+
+    let theme = BEAUDAR.theme || "github-light";
+    const parsedTheme =
+      theme === "auto"
+        ? document.documentElement.getAttribute("data-theme") === "dark"
+          ? "github-dark"
+          : "github-light"
+        : theme;
+
+    window.loadScript(
+      "https://beaudar.lipk.org/client.js",
+      {
+        id: "beaudar-script",
+        repo: BEAUDAR.repo,
+        ...(BEAUDAR.branch ? { branch: BEAUDAR.branch } : {}),
+        "issue-term": BEAUDAR.issue_term || "pathname",
+        theme: parsedTheme,
+        crossorigin: "anonymous",
+      },
+      container
+    );
+  }
 
   const themeSetHandler = (e) => {
     let theme = e.detail.theme;
@@ -24,27 +51,12 @@ import { BEAUDAR } from "../../../utils/config";
       "https://beaudar.lipk.org"
     );
   };
+
+  document.body.removeEventListener("theme-set", themeSetHandler);
   document.body.addEventListener("theme-set", themeSetHandler);
 
-  let theme = BEAUDAR.theme || "github-light";
-  const parsedTheme =
-    theme === "auto"
-      ? document.documentElement.getAttribute("data-theme") === "dark"
-        ? "github-dark"
-        : "github-light"
-      : theme;
-  window.loadScript(
-    "https://beaudar.lipk.org/client.js",
-    {
-      id: "beaudar-script",
-      repo: BEAUDAR.repo,
-      ...(BEAUDAR.branch ? { branch: BEAUDAR.branch } : {}),
-      "issue-term": BEAUDAR.issue_term || "pathname",
-      theme: parsedTheme,
-      crossorigin: "anonymous",
-    },
-    container
-  );
+  setupBeaudar();
+  document.addEventListener("astro:page-load", setupBeaudar);
 </script>
 
 <style lang="stylus" is:global>
