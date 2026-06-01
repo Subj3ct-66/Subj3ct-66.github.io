@@ -116,6 +116,7 @@ export interface BeaudarConfig {
   repo: string;
   issue_term: string;
   theme: string;
+  branch?: string;
 }
 
 export interface TwikooConfig {

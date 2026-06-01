@@ -66,6 +66,7 @@ export default {
     repo: "Subj3ct-66/Subj3ct-66.github.io",
     issue_term: "pathname",
     theme: "auto",
+    branch: "main",
   },
   twikoo: { enable: false },
   disqus: { enable: false },

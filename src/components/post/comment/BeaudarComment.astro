@@ -38,6 +38,7 @@ import { BEAUDAR } from "../../../utils/config";
     {
       id: "beaudar-script",
       repo: BEAUDAR.repo,
+      ...(BEAUDAR.branch ? { branch: BEAUDAR.branch } : {}),
       "issue-term": BEAUDAR.issue_term || "pathname",
       theme: parsedTheme,
       crossorigin: "anonymous",
