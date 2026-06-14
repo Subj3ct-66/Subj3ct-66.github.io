@@ -2,7 +2,7 @@
 title: DES算法原理解析
 description: 对DES算法的一个分享。
 cover: /images/b9c0817b25c9ff172674694ff445331e6faeae36.jpg@1192w.avif
-coverPosition: center 13%
+coverPosition: center 8%
 pubDate: 2026-02-14
 tags:
   - crypto
