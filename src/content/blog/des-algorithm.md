@@ -1,16 +1,16 @@
 ---
 title: DES算法原理解析
-description: 从 IP 置换、16 轮迭代到 IP⁻¹ 逆置换，梳理 DES 分组对称加密的核心流程与密钥调度过程。
+description: 对DES算法的一个分享。
 cover: /images/b9c0817b25c9ff172674694ff445331e6faeae36.jpg@1192w.avif
-coverPosition: center 35%
-pubDate: 2026-06-14
+coverPosition: center 20%
+pubDate: 2026-02-14
 tags:
   - crypto
   - des
   - security
+  - reverse
 categories:
   - 笔记
-  - 密码学
 ---
 
 # 简单介绍
