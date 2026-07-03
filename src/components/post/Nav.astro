@@ -20,6 +20,13 @@ const prevCover = prev
 const nextCover = next
   ? urlFor((await postCoverForEntry(next)) || BANNER)
   : "";
+const navCoverPosition = (
+  override: string | undefined,
+  post: CollectionEntry<"blog">
+) => override ?? post.data.navCoverPosition ?? post.data.coverPosition;
+
+const prevCoverPosition = prev ? navCoverPosition(navPrevCoverPosition, prev) : undefined;
+const nextCoverPosition = next ? navCoverPosition(navNextCoverPosition, next) : undefined;
 ---
 
 {
@@ -32,11 +39,8 @@ const nextCover = next
             src={prevCover}
             alt={prev.data.title}
             style={
-              navPrevCoverPosition || prev.data.coverPosition
-                ? {
-                    objectPosition:
-                      navPrevCoverPosition ?? prev.data.coverPosition,
-                  }
+              prevCoverPosition
+                ? { objectPosition: prevCoverPosition }
                 : undefined
             }
           />
@@ -52,11 +56,8 @@ const nextCover = next
             src={nextCover}
             alt={next.data.title}
             style={
-              navNextCoverPosition || next.data.coverPosition
-                ? {
-                    objectPosition:
-                      navNextCoverPosition ?? next.data.coverPosition,
-                  }
+              nextCoverPosition
+                ? { objectPosition: nextCoverPosition }
                 : undefined
             }
           />

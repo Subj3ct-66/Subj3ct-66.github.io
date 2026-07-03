@@ -18,6 +18,7 @@ const blog = defineCollection({
     cover: z.string().optional(),
     coverPosition: z.string().optional(),
     headerCoverPosition: z.string().optional(),
+    navCoverPosition: z.string().optional(),
     navPrevCoverPosition: z.string().optional(),
     navNextCoverPosition: z.string().optional(),
     excerpt: z.string().optional(),
