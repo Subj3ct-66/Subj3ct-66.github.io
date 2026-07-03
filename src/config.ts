@@ -92,6 +92,26 @@ export default {
     rotate: true,
   },
 
+  cursor: {
+    enable: true,
+    disable_on_mobile: true,
+    image: "/images/cursor/spear-cursor.png",
+    pointer_image: "/images/cursor/spear-cursor.png",
+    hotspot: [0, 0] as [number, number],
+    size: 48,
+    trail_anchor: [33, 32] as [number, number],
+  },
+
+  mouse_trail: {
+    enable: true,
+    disable_on_mobile: true,
+    point_spacing: 1,
+    max_points: 576,
+    fade_duration: 3000,
+    flag_image: "/images/cursor/flag-trail.png",
+    flag_width: 40,
+  },
+
   osmanthus: {
     enable: true,
     disable_on_mobile: true,

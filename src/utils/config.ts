@@ -57,78 +57,79 @@ export interface SocialConfig {
 
 export interface ValineConfig {
   enable: boolean;
-  appId: string;
-  appKey: string;
-  pageSize: number;
-  avatar: string;
-  lang: string;
-  placeholder: string;
-  guest_info: string;
-  recordIP: boolean;
-  highlight: boolean;
-  visitor: boolean;
-  serverURLs: string;
+  appId?: string;
+  appKey?: string;
+  pageSize?: number;
+  avatar?: string;
+  lang?: string;
+  placeholder?: string;
+  guest_info?: string;
+  recordIP?: boolean;
+  highlight?: boolean;
+  visitor?: boolean;
+  serverURLs?: string;
 }
 
 export interface WalineConfig {
   enable: boolean;
-  serverURL: string;
-  lang: string;
-  locale: any;
-  emoji: string[];
-  meta: string[];
-  requiredMeta: string[];
-  wordLimit: number;
-  pageview: boolean;
+  serverURL?: string;
+  lang?: string;
+  locale?: Record<string, unknown>;
+  emoji?: string[];
+  meta?: string[];
+  requiredMeta?: string[];
+  wordLimit?: number;
+  pageSize?: number;
+  pageview?: boolean;
 }
 
 export interface GitalkConfig {
   enable: boolean;
-  clientID: string;
-  clientSecret: string;
-  repo: string;
-  owner: string;
-  admin: string[];
+  clientID?: string;
+  clientSecret?: string;
+  repo?: string;
+  owner?: string;
+  admin?: string[];
 }
 
 export interface GiscusConfig {
   enable: boolean;
-  repo: string;
-  repoId: string;
-  category: string;
-  categoryId: string;
-  mapping: string;
-  strict: number | string;
-  reactionsEnabled: number | string;
-  emitMetadata: number | string;
-  inputPosition: string;
+  repo?: string;
+  repoId?: string;
+  category?: string;
+  categoryId?: string;
+  mapping?: string;
+  strict?: number | string;
+  reactionsEnabled?: number | string;
+  emitMetadata?: number | string;
+  inputPosition?: string;
 }
 
 export interface UtterancesConfig {
   enable: boolean;
-  repo: string;
-  issue_term: string;
-  theme: string;
+  repo?: string;
+  issue_term?: string;
+  theme?: string;
 }
 
 export interface BeaudarConfig {
   enable: boolean;
-  repo: string;
-  issue_term: string;
-  theme: string;
+  repo?: string;
+  issue_term?: string;
+  theme?: string;
   branch?: string;
 }
 
 export interface TwikooConfig {
   enable: boolean;
-  envId: string;
-  region: string;
+  envId?: string;
+  region?: string;
 }
 
 export interface DisqusConfig {
   enable: boolean;
-  shortname: string;
-  count: boolean;
+  shortname?: string;
+  count?: boolean;
 }
 
 export interface FriendConfig {
@@ -187,6 +188,26 @@ export interface OsmanthusConfig {
   disable_on_mobile: boolean;
   count: number;
   colors: string[];
+}
+
+export interface MouseTrailConfig {
+  enable: boolean;
+  disable_on_mobile: boolean;
+  point_spacing: number;
+  max_points: number;
+  fade_duration: number;
+  flag_image: string;
+  flag_width: number;
+}
+
+export interface CursorConfig {
+  enable: boolean;
+  disable_on_mobile: boolean;
+  image: string;
+  pointer_image?: string;
+  hotspot: [number, number];
+  size: number;
+  trail_anchor: [number, number];
 }
 
 export interface HomeCategoriesConfig {
@@ -287,6 +308,8 @@ const typedConfig = config as {
   banner_srcset: BannerSrcSetConfig;
   firework: FireworkConfig;
   osmanthus: OsmanthusConfig;
+  mouse_trail: MouseTrailConfig;
+  cursor: CursorConfig;
   home_categories: HomeCategoriesConfig;
   widgets: string[];
   triangle_badge: TriangleBadgeConfig;
@@ -319,6 +342,8 @@ export const BANNER = typedConfig.banner;
 export const BANNER_SRCSET = typedConfig.banner_srcset;
 export const FIREWORK = typedConfig.firework;
 export const OSMANTHUS = typedConfig.osmanthus;
+export const MOUSE_TRAIL = typedConfig.mouse_trail;
+export const CURSOR = typedConfig.cursor;
 export const HOME_CATEGORIES = typedConfig.home_categories;
 export const TRIANGLE_BADGE = typedConfig.triangle_badge;
 export const OUTDATE = typedConfig.outdate;

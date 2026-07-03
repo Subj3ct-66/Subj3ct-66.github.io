@@ -22,6 +22,8 @@ import SearchBox from "../components/partial/SearchBox";
 import MusicPlayer from "../components/partial/MusicPlayer";
 import Firework from "../components/partial/Firework.astro";
 import OsmanthusFall from "../components/partial/OsmanthusFall.astro";
+import MouseTrail from "../components/partial/MouseTrail.astro";
+import CustomCursor from "../components/partial/CustomCursor.astro";
 
 type Props = {
   title?: string;
@@ -90,6 +92,7 @@ const headerImage = cover || BANNER;
     <ClientRouter />
   </head>
   <body>
+    <CustomCursor />
     <OsmanthusFall />
     {PRELOADER.enable && <Loader />}
     <Header
@@ -122,6 +125,7 @@ const headerImage = cover || BANNER;
     </main>
     <slot name="footer" />
     <AfterFooter />
+    <MouseTrail />
     <Firework />
     <ToTop client:load imageUrl={urlFor("images/OIP-nobg.webp")} />
     <MobileNav isPost={isPost} headings={headings} toc={toc} />

@@ -1,0 +1,110 @@
+---
+import { CURSOR } from "../../utils/config";
+import { urlFor } from "../../utils/urlFor";
+
+const cursorUrl = urlFor(CURSOR.image);
+const [hotspotX, hotspotY] = CURSOR.hotspot;
+const cursorSize = CURSOR.size ?? 48;
+---
+
+{
+  CURSOR.enable && (
+    <>
+      <img
+        id="custom-cursor"
+        src={cursorUrl}
+        alt=""
+        aria-hidden="true"
+        width={cursorSize}
+        height={cursorSize}
+      />
+      <style is:global>
+        @media (pointer: fine) {
+          html.custom-cursor-active,
+          html.custom-cursor-active body,
+          html.custom-cursor-active body * {
+            cursor: none !important;
+          }
+        }
+
+        #custom-cursor {
+          position: fixed;
+          left: 0;
+          top: 0;
+          width: {cursorSize}px;
+          height: auto;
+          pointer-events: none;
+          z-index: 99999;
+          opacity: 0;
+          will-change: transform;
+          user-select: none;
+        }
+      </style>
+      <script is:inline define:vars={{ hotspotX, hotspotY }}>
+        let cursorCleanup = null;
+
+        function isMobileDevice() {
+          return (
+            window.matchMedia("(max-width: 767px)").matches ||
+            /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+          );
+        }
+
+        function startCustomCursor() {
+          cursorCleanup?.();
+          cursorCleanup = null;
+
+          const cursor = document.getElementById("custom-cursor");
+          if (!cursor) return;
+
+          if (
+            isMobileDevice() ||
+            !window.matchMedia("(pointer: fine)").matches ||
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ) {
+            document.documentElement.classList.remove("custom-cursor-active");
+            cursor.style.opacity = "0";
+            return;
+          }
+
+          document.documentElement.classList.add("custom-cursor-active");
+          let visible = false;
+
+          function move(event) {
+            cursor.style.transform = `translate(${event.clientX - hotspotX}px, ${event.clientY - hotspotY}px)`;
+            if (!visible) {
+              cursor.style.opacity = "1";
+              visible = true;
+            }
+          }
+
+          function hide() {
+            cursor.style.opacity = "0";
+            visible = false;
+          }
+
+          function show() {
+            cursor.style.opacity = "1";
+            visible = true;
+          }
+
+          window.addEventListener("pointermove", move, { passive: true });
+          document.addEventListener("pointerleave", hide);
+          document.addEventListener("pointerenter", show);
+
+          cursorCleanup = () => {
+            window.removeEventListener("pointermove", move);
+            document.removeEventListener("pointerleave", hide);
+            document.removeEventListener("pointerenter", show);
+            document.documentElement.classList.remove("custom-cursor-active");
+            cursor.style.opacity = "0";
+            visible = false;
+          };
+        }
+
+        startCustomCursor();
+        document.addEventListener("astro:page-load", startCustomCursor);
+      </script>
+    </>
+  )
+}

@@ -1,0 +1,224 @@
+---
+import { CURSOR, MOUSE_TRAIL } from "../../utils/config";
+import { urlFor } from "../../utils/urlFor";
+
+const flagImageUrl = urlFor(MOUSE_TRAIL.flag_image);
+const [tailOffsetX, tailOffsetY] = CURSOR.trail_anchor;
+---
+
+{
+  MOUSE_TRAIL.enable && (
+    <>
+      <canvas id="mouse-trail-canvas" aria-hidden="true"></canvas>
+      <style is:global>
+        #mouse-trail-canvas {
+          position: fixed;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 9998;
+        }
+      </style>
+      <script
+        is:inline
+        define:vars={{
+          mouseTrail: MOUSE_TRAIL,
+          flagImageUrl,
+          tailOffsetX,
+          tailOffsetY,
+        }}
+      >
+        let mouseTrailCleanup = null;
+
+        function isMobileDevice() {
+          return (
+            window.matchMedia("(max-width: 767px)").matches ||
+            /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+          );
+        }
+
+        function startMouseTrail() {
+          if (!mouseTrail?.enable) return;
+          if (mouseTrail.disable_on_mobile && isMobileDevice()) return;
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+          mouseTrailCleanup?.();
+          mouseTrailCleanup = null;
+
+          const canvas = document.getElementById("mouse-trail-canvas");
+          if (!canvas) return;
+
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return;
+
+          const pointSpacing = mouseTrail.point_spacing ?? 1;
+          const maxPoints = mouseTrail.max_points ?? 288;
+          const fadeDuration = mouseTrail.fade_duration ?? 3000;
+          const flagWidth = mouseTrail.flag_width ?? 40;
+          const segmentOverlap = 8;
+          const fadeSpeed = 1000 / (fadeDuration * 60);
+
+          const flagImage = new Image();
+          flagImage.src = flagImageUrl;
+          let flagLoaded = false;
+          flagImage.onload = () => {
+            flagLoaded = true;
+          };
+
+          let width = 0;
+          let height = 0;
+          let trail = [];
+          let rafId = 0;
+          let running = true;
+          let lastX = -1;
+          let lastY = -1;
+
+          function resize() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          }
+
+          function tailPoint(tipX, tipY) {
+            return {
+              x: tipX + tailOffsetX,
+              y: tipY + tailOffsetY,
+            };
+          }
+
+          function pushPoint(tipX, tipY) {
+            const tail = tailPoint(tipX, tipY);
+            trail.push({ x: tail.x, y: tail.y, life: 1 });
+            if (trail.length > maxPoints) {
+              trail.shift();
+            }
+          }
+
+          function addTrailPoints(tipX, tipY) {
+            if (lastX < 0) {
+              pushPoint(tipX, tipY);
+              return;
+            }
+
+            const dx = tipX - lastX;
+            const dy = tipY - lastY;
+            const dist = Math.hypot(dx, dy);
+            const steps = Math.max(1, Math.ceil(dist / pointSpacing));
+
+            for (let i = 1; i <= steps; i++) {
+              const t = i / steps;
+              pushPoint(lastX + dx * t, lastY + dy * t);
+            }
+          }
+
+          function onPointerMove(event) {
+            const tipX = event.clientX;
+            const tipY = event.clientY;
+            addTrailPoints(tipX, tipY);
+            lastX = tipX;
+            lastY = tipY;
+          }
+
+          function drawFlagTrail() {
+            if (!flagLoaded || trail.length < 2) return;
+
+            const n = trail.length;
+            const imgW = flagImage.width;
+            const imgH = flagImage.height;
+            const sliceH = Math.max(6, Math.ceil(imgH / Math.max(n - 1, 1)));
+
+            for (let i = 0; i < n - 1; i++) {
+              const p0 = trail[i];
+              const p1 = trail[i + 1];
+              const dx = p1.x - p0.x;
+              const dy = p1.y - p0.y;
+              const len = Math.hypot(dx, dy);
+              if (len < 0.1) continue;
+
+              const progress = i / Math.max(n - 2, 1);
+              const life = Math.min(p0.life, p1.life);
+              if (life <= 0) continue;
+
+              const angle = Math.atan2(dy, dx);
+              const drawWidth = flagWidth * (0.55 + progress * 0.45);
+              const drawLen = len + segmentOverlap;
+              const srcY = Math.max(
+                0,
+                Math.min(imgH - sliceH, Math.floor((1 - progress) * (imgH - sliceH))),
+              );
+              const midX = (p0.x + p1.x) / 2;
+              const midY = (p0.y + p1.y) / 2;
+
+              ctx.save();
+              ctx.globalAlpha = life * 0.96;
+              ctx.translate(midX, midY);
+              ctx.rotate(angle + Math.PI / 2);
+              ctx.drawImage(
+                flagImage,
+                0,
+                srcY,
+                imgW,
+                sliceH,
+                -drawWidth / 2,
+                -drawLen / 2,
+                drawWidth,
+                drawLen,
+              );
+              ctx.restore();
+            }
+          }
+
+          function tick() {
+            if (!running) return;
+
+            ctx.clearRect(0, 0, width, height);
+
+            for (const point of trail) {
+              point.life -= fadeSpeed;
+            }
+            trail = trail.filter((point) => point.life > 0);
+
+            drawFlagTrail();
+
+            rafId = requestAnimationFrame(tick);
+          }
+
+          function onVisibility() {
+            running = !document.hidden;
+            if (running) {
+              cancelAnimationFrame(rafId);
+              rafId = requestAnimationFrame(tick);
+            }
+          }
+
+          resize();
+          window.addEventListener("resize", resize);
+          window.addEventListener("pointermove", onPointerMove, { passive: true });
+          document.addEventListener("visibilitychange", onVisibility);
+          rafId = requestAnimationFrame(tick);
+
+          mouseTrailCleanup = () => {
+            running = false;
+            cancelAnimationFrame(rafId);
+            window.removeEventListener("resize", resize);
+            window.removeEventListener("pointermove", onPointerMove);
+            document.removeEventListener("visibilitychange", onVisibility);
+            trail = [];
+            lastX = -1;
+            lastY = -1;
+            ctx.clearRect(0, 0, width, height);
+          };
+        }
+
+        startMouseTrail();
+        document.addEventListener("astro:page-load", startMouseTrail);
+      </script>
+    </>
+  )
+}
