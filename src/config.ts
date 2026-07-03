@@ -95,7 +95,7 @@ export default {
   osmanthus: {
     enable: true,
     disable_on_mobile: true,
-    count: 78,
+    count: 99,
     colors: ["#f0d878", "#e8c547", "#d4bc82", "#c9ae6d", "#eee0c0"],
   },
 
