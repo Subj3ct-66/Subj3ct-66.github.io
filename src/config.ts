@@ -92,6 +92,13 @@ export default {
     rotate: true,
   },
 
+  osmanthus: {
+    enable: true,
+    disable_on_mobile: true,
+    count: 78,
+    colors: ["#f0d878", "#e8c547", "#d4bc82", "#c9ae6d", "#eee0c0"],
+  },
+
   firework: {
     enable: true,
     disable_on_mobile: false,

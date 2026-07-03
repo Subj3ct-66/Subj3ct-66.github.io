@@ -182,6 +182,13 @@ export interface FireworkConfig {
   options: Record<string, any>;
 }
 
+export interface OsmanthusConfig {
+  enable: boolean;
+  disable_on_mobile: boolean;
+  count: number;
+  colors: string[];
+}
+
 export interface HomeCategoriesConfig {
   enable: boolean;
   content: {
@@ -279,6 +286,7 @@ const typedConfig = config as {
   banner: string;
   banner_srcset: BannerSrcSetConfig;
   firework: FireworkConfig;
+  osmanthus: OsmanthusConfig;
   home_categories: HomeCategoriesConfig;
   widgets: string[];
   triangle_badge: TriangleBadgeConfig;
@@ -310,6 +318,7 @@ export const MENU = typedConfig.menu;
 export const BANNER = typedConfig.banner;
 export const BANNER_SRCSET = typedConfig.banner_srcset;
 export const FIREWORK = typedConfig.firework;
+export const OSMANTHUS = typedConfig.osmanthus;
 export const HOME_CATEGORIES = typedConfig.home_categories;
 export const TRIANGLE_BADGE = typedConfig.triangle_badge;
 export const OUTDATE = typedConfig.outdate;

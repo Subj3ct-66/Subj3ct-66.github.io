@@ -1,0 +1,180 @@
+---
+import { OSMANTHUS } from "../../utils/config";
+---
+
+{
+  OSMANTHUS.enable && (
+    <>
+      <canvas id="osmanthus-canvas" aria-hidden="true"></canvas>
+      <style is:global>
+        #osmanthus-canvas {
+          position: fixed;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
+        }
+      </style>
+      <script is:inline define:vars={{ osmanthus: OSMANTHUS }}>
+        let osmanthusCleanup = null;
+
+        function isMobileDevice() {
+          return (
+            window.matchMedia("(max-width: 767px)").matches ||
+            /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+          );
+        }
+
+        function drawFlower(ctx, size) {
+          for (let i = 0; i < 4; i++) {
+            ctx.save();
+            ctx.rotate((Math.PI / 2) * i);
+            ctx.beginPath();
+            ctx.ellipse(0, -size * 0.38, size * 0.32, size * 0.55, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        }
+
+        function drawSinglePetal(ctx, size) {
+          ctx.beginPath();
+          ctx.ellipse(0, 0, size * 0.28, size * 0.62, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        function startOsmanthus() {
+          if (!osmanthus?.enable) return;
+          if (osmanthus.disable_on_mobile && isMobileDevice()) return;
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+          osmanthusCleanup?.();
+          osmanthusCleanup = null;
+
+          const canvas = document.getElementById("osmanthus-canvas");
+          if (!canvas) return;
+
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return;
+
+          const colors = osmanthus.colors ?? [
+            "#f0d878",
+            "#e8c547",
+            "#d4bc82",
+            "#c9ae6d",
+          ];
+          const mobile = isMobileDevice();
+          const count = mobile
+            ? Math.max(12, Math.floor((osmanthus.count ?? 36) * 0.45))
+            : (osmanthus.count ?? 36);
+
+          let width = 0;
+          let height = 0;
+          let petals = [];
+          let rafId = 0;
+          let running = true;
+
+          function resize() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = `${width}px`;
+            canvas.style.height = `${height}px`;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          }
+
+          function createPetal() {
+            return {
+              x: Math.random() * width,
+              y: Math.random() * height * -0.3 - 20,
+              size: 4 + Math.random() * 7,
+              rotation: Math.random() * Math.PI * 2,
+              rotationSpeed: (Math.random() - 0.5) * 0.025,
+              speedY: 0.35 + Math.random() * 0.75,
+              swayAmp: 0.25 + Math.random() * 0.7,
+              swayPhase: Math.random() * Math.PI * 2,
+              swaySpeed: 0.008 + Math.random() * 0.018,
+              color: colors[Math.floor(Math.random() * colors.length)],
+              alpha: 0.45 + Math.random() * 0.4,
+              kind: Math.random() < 0.4 ? "flower" : "petal",
+            };
+          }
+
+          function resetPetal(petal) {
+            petal.x = Math.random() * width;
+            petal.y = -20 - Math.random() * 40;
+            petal.size = 4 + Math.random() * 7;
+            petal.rotation = Math.random() * Math.PI * 2;
+            petal.rotationSpeed = (Math.random() - 0.5) * 0.025;
+            petal.speedY = 0.35 + Math.random() * 0.75;
+            petal.swayAmp = 0.25 + Math.random() * 0.7;
+            petal.swayPhase = Math.random() * Math.PI * 2;
+            petal.color = colors[Math.floor(Math.random() * colors.length)];
+            petal.alpha = 0.45 + Math.random() * 0.4;
+            petal.kind = Math.random() < 0.4 ? "flower" : "petal";
+          }
+
+          function tick() {
+            if (!running) return;
+
+            ctx.clearRect(0, 0, width, height);
+
+            for (const petal of petals) {
+              petal.swayPhase += petal.swaySpeed;
+              petal.y += petal.speedY;
+              petal.x += Math.sin(petal.swayPhase) * petal.swayAmp;
+              petal.rotation += petal.rotationSpeed;
+
+              if (petal.y > height + 30) {
+                resetPetal(petal);
+              }
+
+              ctx.save();
+              ctx.translate(petal.x, petal.y);
+              ctx.rotate(petal.rotation);
+              ctx.globalAlpha = petal.alpha;
+              ctx.fillStyle = petal.color;
+
+              if (petal.kind === "flower") {
+                drawFlower(ctx, petal.size);
+              } else {
+                drawSinglePetal(ctx, petal.size);
+              }
+
+              ctx.restore();
+            }
+
+            rafId = requestAnimationFrame(tick);
+          }
+
+          function onVisibility() {
+            running = !document.hidden;
+            if (running) {
+              cancelAnimationFrame(rafId);
+              rafId = requestAnimationFrame(tick);
+            }
+          }
+
+          resize();
+          petals = Array.from({ length: count }, createPetal);
+          window.addEventListener("resize", resize);
+          document.addEventListener("visibilitychange", onVisibility);
+          rafId = requestAnimationFrame(tick);
+
+          osmanthusCleanup = () => {
+            running = false;
+            cancelAnimationFrame(rafId);
+            window.removeEventListener("resize", resize);
+            document.removeEventListener("visibilitychange", onVisibility);
+            ctx.clearRect(0, 0, width, height);
+          };
+        }
+
+        startOsmanthus();
+        document.addEventListener("astro:page-load", startOsmanthus);
+      </script>
+    </>
+  )
+}

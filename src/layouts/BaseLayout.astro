@@ -21,6 +21,7 @@ import SidebarScript from "../components/sidebar/SidebarScript.astro";
 import SearchBox from "../components/partial/SearchBox";
 import MusicPlayer from "../components/partial/MusicPlayer";
 import Firework from "../components/partial/Firework.astro";
+import OsmanthusFall from "../components/partial/OsmanthusFall.astro";
 
 type Props = {
   title?: string;
@@ -89,6 +90,7 @@ const headerImage = cover || BANNER;
     <ClientRouter />
   </head>
   <body>
+    <OsmanthusFall />
     {PRELOADER.enable && <Loader />}
     <Header
       title={title}
