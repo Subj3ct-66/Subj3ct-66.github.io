@@ -68,8 +68,18 @@
     }
   }
 
-  strong {
+  strong,
+  b {
     font-weight: bold;
+    color: var(--red-1);
+  }
+
+  pre strong,
+  pre b,
+  code strong,
+  code b {
+    color: inherit;
+    font-weight: inherit;
   }
 
   em,

@@ -6,6 +6,8 @@ description: >
   持续更新ing
 cover: /images/301926dbfb61dd25ee65186030f8af10da1e809f.jpg@1192w.avif
 coverPosition: center 12%
+navPrevCoverPosition: center 62%
+navNextCoverPosition: center 62%
 pubDate: 2026-04-25
 tags:
   - blog
