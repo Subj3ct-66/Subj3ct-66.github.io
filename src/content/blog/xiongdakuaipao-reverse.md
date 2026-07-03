@@ -1,6 +1,6 @@
 ---
-title: 记一次对游戏熊大快跑的逆向实操
-description: 针对熊出没之熊大快跑这款 IL2CPP Unity 手游，使用 Frida 编写锁血脚本的完整逆向流程记录。
+title: 记一次对某某快跑的逆向实操
+description: 针对某某快跑这款 IL2CPP Unity 手游，使用 Frida 编写锁血脚本的完整逆向流程记录。
 cover: /images/b4a45161fe2670bd56a22905a35901f513d21c4e.jpg@1192w.avif
 coverPosition: center 35%
 pubDate: 2026-07-03
@@ -15,7 +15,7 @@ categories:
 ---
 
 # 前情提要
-几周前，我们网络空间安全学院的老师邀请我上台为同学们做一次有关**安卓逆向**的分享。想到我最近学了**frida**，于是我决定针对**熊大快跑**这款游戏写一个**frida脚本**进行分享，这个脚本主要用于实现**锁血**功能（即碰到各类碰撞物不会掉血、不会死亡）。 
+几周前，我们网络空间安全学院的老师邀请我上台为同学们做一次有关**安卓逆向**的分享。想到我最近学了**frida**，于是我决定针对**某某快跑**这款游戏写一个**frida脚本**进行分享，这个脚本主要用于实现**锁血**功能（即碰到各类碰撞物不会掉血、不会死亡）。 
 # 背景知识
 ## Unity游戏的编译方式
 Unity游戏会有两类**编译方式**，一种是**Mono**，一种是**IL2CPP**。接下来简单介绍一下两种编译方式。
@@ -30,14 +30,14 @@ Unity游戏会有两类**编译方式**，一种是**Mono**，一种是**IL2CPP*
 # 具体流程
 ## 一、查看基本信息和相关dll、C#文件
 ### 基本信息
-1. 在**雷电模拟器**中下载安装游戏**熊出没之熊大快跑**，用**MT管理器**查看相关信息：
+1. 在**雷电模拟器**中下载安装游戏**某某快跑**，用**MT管理器**查看相关信息：
 ![](/images/blog/xiongdakuaipao/qq-1782985048428-1.png)
 显然**没有加固**。
-2. 导出安装包，在win端解压apk，进入**lib文件夹**内查看**so文件**（路径类似于..\熊出没之熊大快跑\lib\arm64-v8a），很明显可以看到有一个叫l**ibil2cpp.so**的so文件，基本可以断定这就是一个**IL2CPP**架构的Unity手游，同时也是一个**ARM64**架构的游戏。
+2. 导出安装包，在win端解压apk，进入**lib文件夹**内查看**so文件**（路径类似于..\lib\arm64-v8a），很明显可以看到有一个叫l**ibil2cpp.so**的so文件，基本可以断定这就是一个**IL2CPP**架构的Unity手游，同时也是一个**ARM64**架构的游戏。
 ![](/images/blog/xiongdakuaipao/qq-1782985426846.png)
 这个**libil2cpp.so**是 Android 平台**IL2CPP**编译Unity游戏的**核心动态库文件**，等同于 Windows 的 **GameAssembly.dll**。
 ### 相关dll、C#以及配置文件
-1. 打开**IL2CppDumper**，选择**libil2cpp.so**，接着选**global-metadata.dat**（路径类似于..\熊出没之熊大快跑\assets\bin\Data\Managed\Metadata\global-metadata.dat），等待几分钟它就会为你dump出**相关dll、C#以及配置文件**在**IL2CppDumper的目录**下：
+1. 打开**IL2CppDumper**，选择**libil2cpp.so**，接着选**global-metadata.dat**（路径类似于..\assets\bin\Data\Managed\Metadata\global-metadata.dat），等待几分钟它就会为你dump出**相关dll、C#以及配置文件**在**IL2CppDumper的目录**下：
 ![](/images/blog/xiongdakuaipao/qq-1782986573568.png)
 ![](/images/blog/xiongdakuaipao/qq-1782986594558.png)
 ![](/images/blog/xiongdakuaipao/qq-1782986094116.png)
