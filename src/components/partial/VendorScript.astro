@@ -46,6 +46,16 @@ import Clarity from "./Clarity.astro";
       });
   }
 
+  if (!window.runWhenIdle) {
+    window.runWhenIdle = (callback, timeout = 2000) => {
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(callback, { timeout });
+      } else {
+        setTimeout(callback, 1);
+      }
+    };
+  }
+
   if (!window.loadCSS) {
     window.loadCSS = (src, options) =>
       new Promise((resolve, reject) => {

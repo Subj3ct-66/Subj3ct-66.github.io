@@ -17,6 +17,8 @@ const cursorSize = CURSOR.size ?? 48;
         aria-hidden="true"
         width={cursorSize}
         height={cursorSize}
+        decoding="async"
+        fetchpriority="low"
       />
       <style is:global>
         @media (pointer: fine) {
@@ -102,8 +104,12 @@ const cursorSize = CURSOR.size ?? 48;
           };
         }
 
-        startCustomCursor();
-        document.addEventListener("astro:page-load", startCustomCursor);
+        function scheduleCustomCursor() {
+          window.runWhenIdle(startCustomCursor);
+        }
+
+        scheduleCustomCursor();
+        document.addEventListener("astro:page-load", scheduleCustomCursor);
       </script>
     </>
   )

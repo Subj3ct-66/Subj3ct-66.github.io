@@ -27,7 +27,10 @@ export default defineConfig({
     // of the `ExpressiveCodeTheme` class here:
     themes: ['github-light', 'github-dark'],
     useDarkModeMediaQuery: false,
-    themeCssSelector: (theme) => `[data-theme='${theme.type}']`,
+    themeCssSelector: (theme) =>
+      theme.type === "light"
+        ? ':root:not([data-theme="dark"]), [data-theme="eye-care"]'
+        : `[data-theme='${theme.type}']`,
     shiki: {
       // You can pass additional plugin options here,
       // e.g. to load custom language grammars:

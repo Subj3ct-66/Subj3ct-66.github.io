@@ -16,6 +16,7 @@ declare global {
       options: string | { id: string; [key: string]: any },
       target?: HTMLElement
     ) => Promise<void>;
+    runWhenIdle: (callback: IdleRequestCallback, timeout?: number) => void;
     loadCSS: (
       src: string,
       options: string | { id: string; [key: string]: any }

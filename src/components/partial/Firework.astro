@@ -5,12 +5,11 @@ import { FIREWORK } from "../../utils/config";
 {
   FIREWORK.enable && (
     <>
-      <script
-        src="https://cdn.jsdelivr.net/npm/mouse-firework@0.3.0-beta.1/dist/index.umd.js"
-        defer
-      />
       <script is:inline define:vars={{ firework: FIREWORK }}>
         let fireworkCleanup = null;
+
+        const FIREWORK_SRC =
+          "https://cdn.jsdelivr.net/npm/mouse-firework@0.3.0-beta.1/dist/index.umd.js";
 
         function isMobileDevice() {
           return (
@@ -34,11 +33,15 @@ import { FIREWORK } from "../../utils/config";
             startFirework();
             return;
           }
-          window.setTimeout(bootFirework, 50);
+          window.loadScript(FIREWORK_SRC).then(startFirework).catch(() => {});
         }
 
-        bootFirework();
-        document.addEventListener("astro:page-load", startFirework);
+        function scheduleFirework() {
+          window.runWhenIdle(bootFirework);
+        }
+
+        scheduleFirework();
+        document.addEventListener("astro:page-load", scheduleFirework);
       </script>
     </>
   )

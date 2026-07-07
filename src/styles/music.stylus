@@ -92,7 +92,16 @@
   color: var(--grey-7);
 }
 
+:global([data-theme='eye-care'] .aplayer) {
+  background: var(--color-wrap) !important;
+  color: var(--color-default);
+}
+
 :global([data-theme='dark'] .aplayer .aplayer-list) {
+  background: var(--color-wrap) !important;
+}
+
+:global([data-theme='eye-care'] .aplayer .aplayer-list) {
   background: var(--color-wrap) !important;
 }
 

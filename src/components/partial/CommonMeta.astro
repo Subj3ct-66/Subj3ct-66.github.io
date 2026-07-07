@@ -35,6 +35,10 @@ const resolvedImage = urlFor(image);
   content={Array.isArray(keywords) ? keywords.join(",") : keywords}
 />
 
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+<link rel="dns-prefetch" href="https://beaudar.lipk.org" />
+<link rel="dns-prefetch" href="https://bttn.love" />
+
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />

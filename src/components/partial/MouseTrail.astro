@@ -216,8 +216,12 @@ const [tailOffsetX, tailOffsetY] = CURSOR.trail_anchor;
           };
         }
 
-        startMouseTrail();
-        document.addEventListener("astro:page-load", startMouseTrail);
+        function scheduleMouseTrail() {
+          window.runWhenIdle(startMouseTrail);
+        }
+
+        scheduleMouseTrail();
+        document.addEventListener("astro:page-load", scheduleMouseTrail);
       </script>
     </>
   )

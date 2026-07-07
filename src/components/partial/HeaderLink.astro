@@ -13,7 +13,7 @@ const { href, icon, ...props } = Astro.props;
 <span class="main-nav-link-wrap">
   {
     icon ? (
-      <img class="main-nav-icon main-nav-icon-image" src={urlFor(icon)} alt="" width="24" height="24" />
+      <img class="main-nav-icon main-nav-icon-image" src={urlFor(icon)} alt="" width="24" height="24" loading="lazy" decoding="async" />
     ) : (
       <Icon name="fa6-solid:yin-yang" class="main-nav-icon" size={24} />
     )

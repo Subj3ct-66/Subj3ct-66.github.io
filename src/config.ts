@@ -21,11 +21,11 @@ export default {
     { name: "about", url: "/about", icon: "/images/a868875dd498a43d86c00ceecaf69fc4c66dedd213df30-VZsHvS_fw658.webp" },
   ],
 
-  banner: "/images/banner-main.png",
+  banner: "/images/banner-main.webp",
   banner_srcset: {
-    enable: false,
+    enable: true,
     srcset: [
-      { src: "/images/banner-main.png", media: "(min-width: 800px)" },
+      { src: "/images/banner-main.webp", media: "(min-width: 0px)" },
     ],
   },
 
@@ -174,7 +174,7 @@ export default {
         autoplay: false,
         loop: "all",
         order: "list",
-        preload: "auto",
+        preload: "metadata",
         volume: 0.7,
         mutex: true,
         listFolded: true,

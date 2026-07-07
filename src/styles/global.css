@@ -88,6 +88,35 @@
   }
 }
 
+[data-theme="eye-care"]:root {
+  --red-0: #4a7a48;
+  --red-1: #5c8a52;
+  --red-2: #7aa872;
+  --red-3: #9ec498;
+  --red-4: #c2dfc0;
+  --red-5: #dcefdc;
+  --red-5-5: #ebf6ea;
+  --red-6: #f4faf3;
+  --color-red-6-shadow: rgba(92, 138, 82, 0.38);
+  --color-red-3-shadow: rgba(92, 138, 82, 0.2);
+
+  --color-archive-year: #3d5c42;
+  --color-default: #3a5240;
+  --color-border: var(--red-3);
+  --color-link: #4a7a48;
+  --color-background: #c7e6cc;
+  --color-code-background: #e8f4ea;
+  --color-header-background: rgba(232, 245, 233, 0.92);
+  --color-footer-background: #e8f5e9;
+  --color-mobile-nav-background: #e8f5e9;
+  --color-wrap: #eef8ef;
+
+  --color-h2-border: #b8d8bc;
+  --color-meta-shadow: var(--red-6);
+  --color-hover-shadow: rgba(58, 90, 64, 0.12);
+  --color-h2-after: var(--red-1);
+}
+
 /* fix astro bug https://github.com/withastro/astro/issues/9521 */
 svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
   overflow: visible;
@@ -239,6 +268,11 @@ body {
   color: #3d3422;
 }
 
+[data-theme="eye-care"] ::selection {
+  background: var(--red-2);
+  color: #2d4a32;
+}
+
 #mask {
   z-index: 1000;
   position: fixed;
@@ -281,6 +315,17 @@ body {
   ::-webkit-scrollbar,
   ::-webkit-scrollbar-track {
     background-color: #616161;
+  }
+}
+
+[data-theme="eye-care"] {
+  ::-webkit-scrollbar,
+  ::-webkit-scrollbar-track {
+    background-color: #d4ecd6;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--red-2);
   }
 }
 

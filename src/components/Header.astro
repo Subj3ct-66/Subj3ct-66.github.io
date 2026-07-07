@@ -49,9 +49,9 @@ const postCoverPosition =
     </span>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation">
-    <RssBtn client:load href={urlFor("rss.xml")} className="nav-icon" />
-    <SearchBtn client:load className="nav-icon" />
-    <ThemeBtn client:load className="nav-icon" />
+    <RssBtn client:idle href={urlFor("rss.xml")} className="nav-icon" />
+    <SearchBtn client:idle className="nav-icon" />
+    <ThemeBtn client:idle className="nav-icon" />
   </nav>
   {
     TRIANGLE_BADGE.enable && (
@@ -98,21 +98,35 @@ const postCoverPosition =
 </header>
 
 <script>
+  let scrollTicking = false;
   let oldScrollTop = 0;
-  window.addEventListener("scroll", () => {
-    let scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    let diffY = scrollTop - oldScrollTop;
-    window.diffY = diffY;
-    oldScrollTop = scrollTop;
-    if (diffY < 0) {
-      document
-        .getElementById("header-nav")!
-        .classList.remove("header-nav-hidden");
-    } else {
-      document.getElementById("header-nav")!.classList.add("header-nav-hidden");
-    }
-  });
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        const scrollTop =
+          document.documentElement.scrollTop || document.body.scrollTop;
+        const diffY = scrollTop - oldScrollTop;
+        window.diffY = diffY;
+        oldScrollTop = scrollTop;
+        const nav = document.getElementById("header-nav");
+        if (!nav) {
+          scrollTicking = false;
+          return;
+        }
+        if (diffY < 0) {
+          nav.classList.remove("header-nav-hidden");
+        } else {
+          nav.classList.add("header-nav-hidden");
+        }
+        scrollTicking = false;
+      });
+    },
+    { passive: true }
+  );
 </script>
 
 <style lang="stylus">
@@ -226,6 +240,12 @@ const postCoverPosition =
 
     :global(.nav-icon) {
       color: var(--red-2);
+    }
+  }
+
+  :global([data-theme='eye-care']) {
+    #header-nav:hover {
+      background: rgba(232, 245, 233, 0.98);
     }
   }
 

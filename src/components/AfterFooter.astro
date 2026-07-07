@@ -33,8 +33,11 @@ const copyright = String.raw`
       offset: 50,
     });
   };
-  aosInit();
-  document.addEventListener("astro:after-swap", aosInit);
+  const scheduleAos = () => {
+    window.runWhenIdle(aosInit);
+  };
+  scheduleAos();
+  document.addEventListener("astro:after-swap", scheduleAos);
 </script>
 <!-- ThemeToogle -->
 <script>
@@ -43,17 +46,27 @@ const copyright = String.raw`
     const storedTheme = JSON.parse(
       window.localStorage.getItem("theme") ?? '"auto"'
     );
-    let presetTheme;
+    let colorMode;
     if (storedTheme === "auto") {
-      presetTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      colorMode = window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light";
+    } else if (
+      storedTheme === "light" ||
+      storedTheme === "dark" ||
+      storedTheme === "eye-care"
+    ) {
+      colorMode = storedTheme;
     } else {
-      presetTheme = storedTheme;
+      colorMode = "light";
     }
-    if (presetTheme === "dark") {
+
+    if (colorMode === "dark") {
       document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.style.colorScheme = "dark";
+    } else if (colorMode === "eye-care") {
+      document.documentElement.setAttribute("data-theme", "eye-care");
+      document.documentElement.style.colorScheme = "light";
     } else {
       document.documentElement.removeAttribute("data-theme");
       document.documentElement.style.colorScheme = "light";

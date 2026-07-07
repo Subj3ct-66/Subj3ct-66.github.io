@@ -5,6 +5,8 @@ import { BEAUDAR } from "../../../utils/config";
 <div id="comments" class="beaudar-comment" data-aos="fade-up"></div>
 
 <script data-astro-rerun is:inline define:vars={{ BEAUDAR }}>
+  let beaudarStarted = false;
+
   function setupBeaudar() {
     const container = document.querySelector(".beaudar-comment");
     if (!container) return;
@@ -13,12 +15,16 @@ import { BEAUDAR } from "../../../utils/config";
     document.getElementById("beaudar-script")?.remove();
 
     let theme = BEAUDAR.theme || "github-light";
-    const parsedTheme =
+    let parsedTheme =
       theme === "auto"
         ? document.documentElement.getAttribute("data-theme") === "dark"
           ? "github-dark"
           : "github-light"
         : theme;
+
+    if (parsedTheme !== "github-dark" && parsedTheme !== "github-light") {
+      parsedTheme = "github-light";
+    }
 
     window.loadScript(
       "https://beaudar.lipk.org/client.js",
@@ -40,6 +46,8 @@ import { BEAUDAR } from "../../../utils/config";
       theme = window.matchMedia("(prefers-color-scheme: dark)").matches
         ? "dark"
         : "light";
+    } else if (e.detail.theme === "eye-care") {
+      theme = "light";
     }
     const iframe = document.querySelector("iframe.beaudar-frame");
     if (!iframe || !iframe.contentWindow) {
@@ -52,11 +60,41 @@ import { BEAUDAR } from "../../../utils/config";
     );
   };
 
-  document.body.removeEventListener("theme-set", themeSetHandler);
-  document.body.addEventListener("theme-set", themeSetHandler);
+  function startBeaudar() {
+    if (beaudarStarted) return;
+    beaudarStarted = true;
 
-  setupBeaudar();
-  document.addEventListener("astro:page-load", setupBeaudar);
+    document.body.removeEventListener("theme-set", themeSetHandler);
+    document.body.addEventListener("theme-set", themeSetHandler);
+    setupBeaudar();
+  }
+
+  function observeBeaudar() {
+    const container = document.querySelector(".beaudar-comment");
+    if (!container) return;
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            window.runWhenIdle(startBeaudar);
+          }
+        },
+        { rootMargin: "200px 0px" }
+      );
+      observer.observe(container);
+      return;
+    }
+
+    window.runWhenIdle(startBeaudar);
+  }
+
+  observeBeaudar();
+  document.addEventListener("astro:page-load", () => {
+    beaudarStarted = false;
+    observeBeaudar();
+  });
 </script>
 
 <style lang="stylus" is:global>

@@ -99,17 +99,23 @@ const { Content, headings } = await render(post);
   }
 
   document.addEventListener("astro:page-load", () => {
-    setupArticleGallery().catch(console.error);
+    window.runWhenIdle(() => {
+      setupArticleGallery().catch(console.error);
+    });
   });
 </script>
 
 <script>
-  import mermaid from "mermaid";
+  let mermaidModule: typeof import("mermaid") | null = null;
 
   const saveOriginalData = () => {
     return new Promise<void>((resolve, reject) => {
       try {
         const els = document.querySelectorAll("pre.mermaid");
+        if (!els.length) {
+          resolve();
+          return;
+        }
         let count = els.length;
         els.forEach((element) => {
           if (element.getAttribute("data-original-code") == null) {
@@ -130,6 +136,10 @@ const { Content, headings } = await render(post);
     return new Promise<void>((resolve, reject) => {
       try {
         const els = document.querySelectorAll("pre.mermaid");
+        if (!els.length) {
+          resolve();
+          return;
+        }
         let count = els.length;
         els.forEach((element) => {
           if (element.getAttribute("data-original-code") != null) {
@@ -147,7 +157,13 @@ const { Content, headings } = await render(post);
       }
     });
   };
-  const loadMermaid = async (theme: any) => {
+
+  const loadMermaid = async (theme: string) => {
+    if (!document.querySelector("pre.mermaid")) return;
+    if (!mermaidModule) {
+      mermaidModule = await import("mermaid");
+    }
+    const mermaid = mermaidModule.default;
     mermaid.initialize({
       startOnLoad: false,
       theme,
@@ -156,9 +172,10 @@ const { Content, headings } = await render(post);
       querySelector: "pre.mermaid",
     });
   };
-  const themeSetHandler = (e: any) => {
+
+  const themeSetHandler = (e: CustomEvent<{ theme: string }>) => {
     let theme = e.detail.theme;
-    if (e.detail.theme === "light") {
+    if (e.detail.theme === "light" || e.detail.theme === "eye-care") {
       theme = "default";
     } else if (e.detail.theme === "auto") {
       theme = window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -174,12 +191,15 @@ const { Content, headings } = await render(post);
       })
       .catch(console.error);
   };
+
   const mermaidInit = () => {
-    document.body.removeEventListener("theme-set", themeSetHandler);
-    document.body.addEventListener("theme-set", themeSetHandler);
+    if (!document.querySelector("pre.mermaid")) return;
+
+    document.body.removeEventListener("theme-set", themeSetHandler as EventListener);
+    document.body.addEventListener("theme-set", themeSetHandler as EventListener);
 
     let theme = localStorage.getItem("theme");
-    if (theme === '"light"') {
+    if (theme === '"light"' || theme === '"eye-care"') {
       theme = "default";
     } else if (theme === '"auto"') {
       theme = window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -201,6 +221,11 @@ const { Content, headings } = await render(post);
         .catch(console.error);
     }
   };
-  document.addEventListener("astro:after-swap", mermaidInit);
-  mermaidInit();
+
+  const scheduleMermaid = () => {
+    window.runWhenIdle(mermaidInit);
+  };
+
+  document.addEventListener("astro:after-swap", scheduleMermaid);
+  scheduleMermaid();
 </script>

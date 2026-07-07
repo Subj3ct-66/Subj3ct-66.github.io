@@ -172,8 +172,12 @@ import { OSMANTHUS } from "../../utils/config";
           };
         }
 
-        startOsmanthus();
-        document.addEventListener("astro:page-load", startOsmanthus);
+        function scheduleOsmanthus() {
+          window.runWhenIdle(startOsmanthus);
+        }
+
+        scheduleOsmanthus();
+        document.addEventListener("astro:page-load", scheduleOsmanthus);
       </script>
     </>
   )
