@@ -2244,6 +2244,3 @@ python solve.py
 flag{8d5f7c7e-2b66-42de-a3c0-91b6b0c450d5}
 
 ```
-
-# 录屏链接
-https://4000093038.share.123pan.cn/123pan/8qVuMh-5MJj3
