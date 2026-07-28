@@ -17,7 +17,6 @@ categories:
 
 队伍：D0G3
 排名：72
-![](/images/blog/huanghebei2026/f50fcd797cab661c30069ff6236d5857.png)
 # Reverse
 ## Snake VM-HHB2026
 题目是一个 Go（Windows amd64）终端贪吃蛇 crackme。表面上靠吃果实攒分“吐出”flag，实际上 flag 在开局就被算好：密文经自定义栈 VM 密钥流解密得到 BWT last column，再以 primary index = 37 做 BWT 逆变换即可得到完整 42 字节明文。静态复现即可，不必通关游戏。
